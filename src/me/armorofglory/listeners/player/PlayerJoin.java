@@ -9,6 +9,7 @@ import me.armorofglory.Warfare;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.listeners.MGListener;
 import me.armorofglory.utils.ChatUtilities;
+import me.armorofglory.utils.LocationUtilities;
 
 public class PlayerJoin extends MGListener {
 
@@ -17,10 +18,10 @@ public class PlayerJoin extends MGListener {
 	}
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event){
-		Game.setCanStart(Bukkit.getOnlinePlayers().size() >= 2);
-		int online = Bukkit.getOnlinePlayers().size();
-		ChatUtilities.broadcast(ChatColor.DARK_GRAY + " (" + ChatColor.YELLOW + online + ChatColor.DARK_GRAY + ") " + ChatColor.WHITE + "Player(s) Online");
-		if (Bukkit.getOnlinePlayers().size() < 2)
+		int minPlayersToStart = 2;
+		Game.setCanStart(Bukkit.getOnlinePlayers().size() >= minPlayersToStart);
+		if (Bukkit.getOnlinePlayers().size() < minPlayersToStart)
 			ChatUtilities.broadcast(ChatColor.DARK_RED + " Insufficient players to start the game!");
+		LocationUtilities.teleportToSpawn(event.getPlayer());
 	}
 }

@@ -13,7 +13,12 @@ public class ChatUtilities {
 			
 		}
 	}
+	
 	private static String starter(){
 		return DARK_GRAY + "[" + RED + "WARFARE" + DARK_GRAY + "]" + WHITE;
+	}
+	
+	public static void broadcastPlayer(Player player, String msg) {
+		player.sendMessage(starter() + msg);
 	}
 }

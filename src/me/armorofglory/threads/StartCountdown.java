@@ -2,13 +2,14 @@ package me.armorofglory.threads;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.armorofglory.GameState;
 
 import me.armorofglory.handlers.Game;
 import me.armorofglory.utils.ChatUtilities;
 
-public class StartCountdown implements Runnable {
+public class StartCountdown extends BukkitRunnable {
 
 	private static int timeUntilStart;
 
@@ -18,7 +19,7 @@ public class StartCountdown implements Runnable {
 			if (GameState.isState(GameState.LOBBY))
 				if(Game.canStart()){
 					ChatUtilities.broadcast(" Minimum players reached! Countdown starting!");
-					for(timeUntilStart = 60;timeUntilStart>=0;timeUntilStart--){
+					for(timeUntilStart = 10;timeUntilStart>=0;timeUntilStart--){
 						if(!Game.canStart()){
 							ChatUtilities.broadcast(" Not enough players needed to start the game!");
 							break;
