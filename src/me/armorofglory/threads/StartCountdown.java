@@ -5,50 +5,65 @@ import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.armorofglory.GameState;
-
+import me.armorofglory.Warfare;
+import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
-import me.armorofglory.utils.ChatUtilities;
+import me.armorofglory.utils.ChatUtils;
 
 public class StartCountdown extends BukkitRunnable {
 
-	private static int timeUntilStart;
+	Warfare plugin;
+	
+	public StartCountdown(Warfare plugin) {
+		this.plugin = plugin;
+	
+	}
+	
+	private static int counter = ConfigAccessor.getInt("Settings.startCountdownTimer");
+	
+	public static void resetCounter(){
+		counter = ConfigAccessor.getInt("Settings.startCountdownTimer");
+	}
+	
 
-	public void run(){
-		while(true){
-			
-			if (GameState.isState(GameState.LOBBY))
-				if(Game.canStart()){
-					ChatUtilities.broadcast(" Minimum players reached! Countdown starting!");
-					for(timeUntilStart = 10;timeUntilStart>=0;timeUntilStart--){
-						if(!Game.canStart()){
-							ChatUtilities.broadcast(" Not enough players needed to start the game!");
-							break;
-						}
-						if(timeUntilStart==0){
-							Game.start();
-							GameState.setState(GameState.IN_GAME);
-							ChatUtilities.broadcast(ChatColor.GOLD + " Game has started!" );
-							break;
-							
-						}
-						if(timeUntilStart % 10 == 0 || timeUntilStart < 10){
-							ChatUtilities.broadcast(ChatColor.DARK_GRAY + " (" + ChatColor.YELLOW + timeUntilStart + ChatColor.DARK_GRAY + ")" + ChatColor.WHITE + " second(s) until the game starts!");
-						}
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e){
-							e.printStackTrace();
-							Bukkit.shutdown();
-						}
-					} 
-				}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e){
-				e.printStackTrace();
-				Bukkit.shutdown();
+	public void run() {
+		if (GameState.isState(GameState.LOBBY)) {
+			if(Game.canStart()) {
+				
+				if(counter >= 0) {
+					
+					if(counter % 10 == 0 && counter > 0) {
+						
+						ChatUtils.broadcast(ChatColor.DARK_GRAY + "(" + 
+								ChatColor.YELLOW + counter + ChatColor.DARK_GRAY + ")" +
+				        	ChatColor.WHITE + " seconds until the game starts!");
+						
+					} else if (counter > 1 && counter < 10) {
+						
+						ChatUtils.broadcast(ChatColor.DARK_GRAY + "(" + 
+								ChatColor.YELLOW + counter + ChatColor.DARK_GRAY + ")" +
+						        ChatColor.WHITE + " seconds until the game starts!");
+						
+					} else if (counter == 1) {
+						ChatUtils.broadcast(ChatColor.DARK_GRAY + "(" + 
+								ChatColor.YELLOW + counter + ChatColor.DARK_GRAY + ")" +
+						        ChatColor.WHITE + " second until the game starts!");
+						
+					} else if (counter == 0) {
+						Game.start();
+					
+					} counter--;
+				
+			} else {
+				
+				Bukkit.getLogger().info("Countdown stopped");
+				this.cancel();
+				
 			}
+				
+			}
+			
 		}
+		
 	}
 }
-

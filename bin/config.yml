@@ -1,0 +1,23 @@
+###################################################
+#                                                 #
+#            PLUGIN MADE BY ARMOROFGLORY          #
+#                                                 #
+################# CONFIGURATIONFILE ###############
+
+# Main game settings
+Settings:
+  minPlayersToStart: 2
+  startCountdownTimer: 10
+
+# Configure Plugin messages
+Messages:
+  PREFIX: "&6[&eTurfWar&6] &f"
+  Errors:
+    notEnoughPlayersOnline: "Messages.Errors.notEnoughPlayersOnline"
+
+# Lobby Spawn Point
+Locations:
+  Lobby: 
+
+# Game Teams
+Teams:

@@ -3,28 +3,41 @@ package me.armorofglory.listeners.player;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.armorofglory.GameState;
-import me.armorofglory.Warfare;
+import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
-import me.armorofglory.handlers.Team;
-import me.armorofglory.listeners.MGListener;
+import me.armorofglory.threads.StartCountdown;
+import me.armorofglory.utils.ChatUtils;
 
-public class PlayerQuit extends MGListener{
-
-	public PlayerQuit(Warfare pl) {
-		super(pl);
-	}
+public class PlayerQuit implements Listener{
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
+		
 		if(GameState.isState(GameState.LOBBY)) {
-			Game.setCanStart((Bukkit.getOnlinePlayers().size() - 1) >= 2);
+			
+			if (Bukkit.getOnlinePlayers().size() - 1 >= Game.minPlayersToStart) {
+				
+				// Players online is greater than minPlayersToStart
+				Game.setCanStart(true);
+				
+			} else {
+				
+				// Players online is less than minPlayersToStart
+				Game.setCanStart(false);
+				StartCountdown.resetCounter();
+				ChatUtils.broadcast(ConfigAccessor.getString("Messages.Errors.notEnoughPlayersOnline"));
+			}
+	
+		}
 		
 		Player player = event.getPlayer();
-		if(Game.gethasStarted())
-			Team.getTeam(player).remove(player);
+		
+		if(Game.gethasStarted()){
+//			Team.getTeam(player).remove(player);
 		}
 	}
 }

@@ -28,8 +28,8 @@ public class EntityDamageByEntity extends MGListener {
 		Player player = (Player) event.getEntity();
 		Player damager = (Player) event.getDamager();
 		
-		if (Team.getTeam(player) == Team.getTeam(damager)){
-			event.setCancelled(true);
-		}
+//		if (Team.getTeam(player) == Team.getTeam(damager)){
+//			event.setCancelled(true);
+//		}
 	}
 }

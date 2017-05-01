@@ -1,29 +1,40 @@
 package me.armorofglory.handlers;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import me.armorofglory.utils.LocationUtilities;
+import me.armorofglory.GameState;
+import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.utils.ChatUtils;
+import me.armorofglory.utils.LocationUtils;
 
 public class Game {
 	
+	
+	public static int minPlayersToStart = ConfigAccessor.getInt("Settings.minPlayersToStart");
 	private static boolean canStart = false;
 	private static boolean hasStarted = false;
 	
 	public static void start() {
+		
+		GameState.setState(GameState.IN_GAME);
+		ChatUtils.broadcast(ChatColor.GOLD + " Game has started!" );
 		hasStarted = true; 
-		new Team("Red", new Location(Bukkit.getWorld("world"), -19, 61, 48));
-		new Team("Blue", new Location(Bukkit.getWorld("world"), -17, 61, 31));
+		
+		
+		
+		
+		Bukkit.getLogger().info(Integer.toString(Team.allTeams.size()));
 	
-		int i = 0 ;
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (i > Team.getAllTeams().size())
-				i = 0;
-			Team.getAllTeams().get(i).add(player);
-			LocationUtilities.teleportToGame(player,Team.getAllTeams().get(i));
-			i++;
-		}
+	//	int i = 0 ;
+//		for (Player player : Bukkit.getOnlinePlayers()) {
+//			if (i > Team.getAllTeams().size())
+//				i = 0;
+//			Team.getAllTeams().get(i).add(player);
+//			LocationUtils.teleportToGame(player,Team.getAllTeams().get(i));
+//			i++;
+//		}
+		
 	}
 	public static void stop(Team team) {
 		hasStarted = false;

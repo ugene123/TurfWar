@@ -1,6 +1,8 @@
 name: Warfare
 main: me.armorofglory.Warfare
 version: 1.0
-description:
-    Meh
+
 commands:
+  turfwar:
+    description: Base command for Turf Wars Plugin
+    aliases: [tw]

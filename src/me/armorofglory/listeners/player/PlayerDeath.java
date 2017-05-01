@@ -1,27 +1,23 @@
 package me.armorofglory.listeners.player;
 
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import me.armorofglory.Warfare;
-import me.armorofglory.handlers.Team;
-import me.armorofglory.listeners.MGListener;
-import me.armorofglory.utils.ChatUtilities;
-import me.armorofglory.utils.LocationUtilities;
+import me.armorofglory.utils.ChatUtils;
+import me.armorofglory.utils.LocationUtils;
 
-public class PlayerDeath extends MGListener {
-
-	public PlayerDeath(Warfare pl) {
-		super(pl);
-	}
-
-	public void onPlayerDeath(PlayerDeathEvent event) {
-		Player player = event.getEntity();
-		Team.getTeam(player).remove(player);
-		
-		LocationUtilities.teleportToSpawn(player);
-		ChatUtilities.broadcastPlayer(player, ChatColor.RED + " You died!");
-	}
+public class PlayerDeath implements Listener {
 	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		Player player = (Player) event.getEntity();
+//		Team.getTeam(player).remove(player);
+		LocationUtils.teleportToLobby(player);
+        ChatUtils.msgPlayer(player, ChatColor.RED + "You died!");
+	}
 }
+
