@@ -1,6 +1,5 @@
 package me.armorofglory;
 
-import java.util.ArrayList;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -10,11 +9,14 @@ import me.armorofglory.commands.PluginCommandExecutor;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Team;
+import me.armorofglory.listeners.entity.EntityDamageByEntity;
 import me.armorofglory.listeners.player.AsyncPlayerPreLogin;
 import me.armorofglory.listeners.player.PlayerDeath;
 import me.armorofglory.listeners.player.PlayerJoin;
 import me.armorofglory.listeners.player.PlayerQuit;
-import me.armorofglory.threads.StartCountdown;
+import me.armorofglory.listeners.player.PlayerRespawn;
+import me.armorofglory.threads.CountdownStarter;
+import me.armorofglory.threads.TimerStarter;
 
 public class Warfare extends JavaPlugin {
 	
@@ -24,21 +26,36 @@ public class Warfare extends JavaPlugin {
 		return plugin;
 	}
 	
-	StartCountdown startcountdown;
+	
 	
 	public void onEnable() {
 		plugin = this;
+		
+		// register Events & Commands 
 		registerEvents();
 		registerCommands();
+		
+		// Load config
 		ConfigAccessor.loadConfiguration();
+		
+		// Reset game to lobby and cannot start
 		GameState.setState(GameState.LOBBY);
 		Game.setCanStart(false);
-		startcountdown = new StartCountdown(this);
-		startcountdown.runTaskTimer(this, 1 * 20, 1 * 20);
-		ArrayList<String> allTeams = ConfigAccessor.getString("Teams.allTeams"));
+		
+		// Pull allTeams array from config
+		Team.allTeams = ConfigAccessor.getList("Settings.allTeams");
+		
+		// register GameTimer
+		new TimerStarter(this);
+		
+		// register startcountdown and start thread
+		new CountdownStarter(this);
+		CountdownStarter.start();
 	}
 	
 	public void onDisable() {
+		ConfigAccessor.storeList("Settings.allTeams", Team.allTeams);
+
 		plugin = null;
 	}
 	
@@ -49,6 +66,8 @@ public class Warfare extends JavaPlugin {
 	    pm.registerEvents(new PlayerQuit(), this);
 	    pm.registerEvents(new PlayerDeath(), this);
 	    pm.registerEvents(new AsyncPlayerPreLogin(), this);
+	    pm.registerEvents(new PlayerRespawn(), this);
+	    pm.registerEvents(new EntityDamageByEntity(), this);
 	}
 	
 	

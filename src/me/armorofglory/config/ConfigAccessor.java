@@ -1,7 +1,6 @@
 package me.armorofglory.config;
 
-
-import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
@@ -33,6 +32,17 @@ public class ConfigAccessor {
 		plugin.getConfig().set(path, Boolean);
 		plugin.saveConfig();
 	}
+	
+	public static void storeList(String path, List<String> list) {
+		plugin.getConfig().set(path, list);
+		plugin.saveConfig();
+	}
+	
+	public static List<String> getList(String path) {
+		plugin.getConfig().get(path);
+		return plugin.getConfig().getStringList(path);
+	}
+	
 	public static int getInt(String path) {
 		plugin.reloadConfig();
 		return plugin.getConfig().getInt(path);
@@ -53,9 +63,19 @@ public class ConfigAccessor {
 		return plugin.getConfig().getBoolean(path);
 	}
 	
-	public static ArrayList getArray(ArrayList path) {
+	public static boolean containsPath(String path) {
 		plugin.reloadConfig();
-		return plugin.getConfig().getAr;
+		return plugin.getConfig().contains(path);
+	}
+	
+	public static void createPath(String path) {
+		plugin.getConfig().createSection(path);
+		plugin.saveConfig();
+	}
+	
+	public static void removePath(String path) {
+		plugin.getConfig().set(path, null);
+		plugin.saveConfig();
 	}
 	
 	public static void loadConfiguration(){

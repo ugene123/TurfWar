@@ -9,8 +9,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
-import me.armorofglory.threads.StartCountdown;
+import me.armorofglory.handlers.Team;
+import me.armorofglory.score.ScoreboardManager;
+import me.armorofglory.threads.CountdownManager;
 import me.armorofglory.utils.ChatUtils;
+import me.armorofglory.utils.LocationUtils;
 
 public class PlayerQuit implements Listener{
 	
@@ -24,20 +27,35 @@ public class PlayerQuit implements Listener{
 				// Players online is greater than minPlayersToStart
 				Game.setCanStart(true);
 				
+				
 			} else {
 				
 				// Players online is less than minPlayersToStart
 				Game.setCanStart(false);
-				StartCountdown.resetCounter();
+				CountdownManager.resetCounter();
 				ChatUtils.broadcast(ConfigAccessor.getString("Messages.Errors.notEnoughPlayersOnline"));
-			}
-	
+				}
+			
+		}
+		
+		if (GameState.isState(GameState.IN_GAME)) {
+				
+				if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.minPlayersToStart)) {
+					for (Player player : Bukkit.getOnlinePlayers()){
+						LocationUtils.teleportToLobby(player);
+						GameState.setState(GameState.LOBBY);
+						ChatUtils.msgPlayer(player, "There's not enough players online!");
+					}
+
+				}
 		}
 		
 		Player player = event.getPlayer();
 		
-		if(Game.gethasStarted()){
-//			Team.getTeam(player).remove(player);
+		if(GameState.isState(GameState.IN_GAME)){
+			if(Team.hasTeam(player))
+				Team.removePlayer(player);
 		}
+		ScoreboardManager.getPlayersOnline();
 	}
 }

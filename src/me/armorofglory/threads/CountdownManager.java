@@ -1,23 +1,16 @@
 package me.armorofglory.threads;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.armorofglory.GameState;
-import me.armorofglory.Warfare;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
+import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.utils.ChatUtils;
 
-public class StartCountdown extends BukkitRunnable {
+public class CountdownManager extends BukkitRunnable {
 
-	Warfare plugin;
-	
-	public StartCountdown(Warfare plugin) {
-		this.plugin = plugin;
-	
-	}
 	
 	private static int counter = ConfigAccessor.getInt("Settings.startCountdownTimer");
 	
@@ -25,12 +18,14 @@ public class StartCountdown extends BukkitRunnable {
 		counter = ConfigAccessor.getInt("Settings.startCountdownTimer");
 	}
 	
-
 	public void run() {
 		if (GameState.isState(GameState.LOBBY)) {
 			if(Game.canStart()) {
 				
 				if(counter >= 0) {
+					
+					ScoreboardManager.setCounterTitle("Countdown:");
+					ScoreboardManager.setCounter(counter + "");
 					
 					if(counter % 10 == 0 && counter > 0) {
 						
@@ -56,7 +51,6 @@ public class StartCountdown extends BukkitRunnable {
 				
 			} else {
 				
-				Bukkit.getLogger().info("Countdown stopped");
 				this.cancel();
 				
 			}

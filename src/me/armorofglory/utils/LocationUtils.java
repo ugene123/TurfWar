@@ -5,10 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.armorofglory.config.ConfigAccessor;
-import me.armorofglory.handlers.Team;
 
 public class LocationUtils {
 	
+	public static Location lobbySpawn = stringToLocation(ConfigAccessor.getString("Locations.Lobby"));
 	
 	public static Location getTeamSpawn(String team){
 		
@@ -20,12 +20,6 @@ public class LocationUtils {
 	
 	
 	public static void teleportToLobby(Player player) {
-		
-		// Get Lobby string from the Config
-		String LobbyString = ConfigAccessor.getString("Locations.Lobby");
-		// Convert string in Bukkit Location
-		Location lobbySpawn = stringToLocation(LobbyString);
-		
 		player.teleport(lobbySpawn);
 	}
 	
@@ -34,8 +28,9 @@ public class LocationUtils {
 			teleportToLobby(p);
 	}
 	
-	public static void teleportToGame(Player player, Team team) {
-//		player.teleport(team.getSpawn());
+	public static void teleportToGame(Player player, String team) {
+		Location teamspawn = getTeamSpawn(team);
+		player.teleport(teamspawn);
 	}
 	
 	public static Location stringToLocation(String string) {

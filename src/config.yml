@@ -8,7 +8,9 @@
 Settings:
   minPlayersToStart: 2
   startCountdownTimer: 10
-
+  gameDuration: 3
+  allTeams: []
+  
 # Configure Plugin messages
 Messages:
   PREFIX: "&6[&eTurfWar&6] &f"

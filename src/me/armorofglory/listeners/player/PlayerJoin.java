@@ -6,15 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import me.armorofglory.Warfare;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
+import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.utils.ChatUtils;
 import me.armorofglory.utils.LocationUtils;
 
 public class PlayerJoin implements Listener {
 	
-	public static Warfare plugin;
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event){
@@ -42,6 +41,10 @@ public class PlayerJoin implements Listener {
 			// Teleport player to the lobby location
 			LocationUtils.teleportToLobby(player);
 			
+		} 
+		
+		ScoreboardManager.getPlayersOnline();
+
 		}
-	}
+	
 }

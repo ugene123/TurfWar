@@ -2,18 +2,15 @@ package me.armorofglory.listeners.entity;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import me.armorofglory.Warfare;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Team;
-import me.armorofglory.listeners.MGListener;
+import me.armorofglory.utils.ChatUtils;
 
-public class EntityDamageByEntity extends MGListener {
+public class EntityDamageByEntity implements Listener {
 
-	public EntityDamageByEntity(Warfare pl) {
-		super(pl);
-	}
 
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -28,8 +25,11 @@ public class EntityDamageByEntity extends MGListener {
 		Player player = (Player) event.getEntity();
 		Player damager = (Player) event.getDamager();
 		
-//		if (Team.getTeam(player) == Team.getTeam(damager)){
-//			event.setCancelled(true);
-//		}
+		if (Team.getTeam(player) == Team.getTeam(damager)){
+			event.setCancelled(true);
+		} else {
+			ChatUtils.msgPlayer(player, damager.getName() + " has hit you!");
+			ChatUtils.msgPlayer(damager, player.getName() + " took a hit from you!");
+		}
 	}
 }

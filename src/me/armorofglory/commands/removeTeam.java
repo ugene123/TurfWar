@@ -8,7 +8,7 @@ import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.utils.ChatUtils;
 
-public class addTeam {
+public class removeTeam {
 	
 	public static boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
 		
@@ -16,13 +16,13 @@ public class addTeam {
 				
 				String team = args[1].toUpperCase();
 				// if newTeam is NOT in allTeams arrayList and is not in Config
-				if(Team.allTeams.contains(team) != true && (ConfigAccessor.containsPath("Teams." + team) == false)) {
-						new Team(team);
-						ConfigAccessor.createPath("Teams." + team);
+				if(Team.allTeams.contains(team) && (ConfigAccessor.containsPath("Teams." + team))) {
+						Team.allTeams.remove(team);
 						ConfigAccessor.storeList("Settings.allTeams", Team.allTeams);
-						ChatUtils.msgSender(sender, "Team " + team + " has been created!");
+						ConfigAccessor.removePath("Teams." + team);
+						ChatUtils.msgSender(sender, "Team " + team + " has been removed!");
 					}  else {
-					ChatUtils.msgSender(sender, "Team " + team + " already exists!");
+					ChatUtils.msgSender(sender, "Team " + team + " is not an existent team!");
 				}
 		
 			} else {

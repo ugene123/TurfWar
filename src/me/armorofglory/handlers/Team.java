@@ -2,6 +2,8 @@ package me.armorofglory.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -9,11 +11,11 @@ import org.bukkit.entity.Player;
 
 public class Team {
 	
-	public static ArrayList<String> allTeams = new ArrayList<>();
+	public static List<String> allTeams = new ArrayList<>();
 	
 	public static HashMap<String, Location> teamLocations = new HashMap<String, Location>();
 	
-	public static HashMap<String, Team> playerTeams = new HashMap<String, Team>();
+	public static HashMap<String, String> playerTeams = new HashMap<String, String>();
 	
 	public String teamname;
 	
@@ -22,11 +24,11 @@ public class Team {
 		allTeams.add(teamName);
 	}
 	
-	public static void addPlayer(Player player, Team team) {
+	public static void addPlayer(Player player, String team) {
 		playerTeams.put(player.getName(), team);
 	}
 	
-	public static void removePlayer(Player player, Team team) {
+	public static void removePlayer(Player player) {
 		if(hasTeam(player) == true)
 			playerTeams.remove(player.getName());
 	}
@@ -35,9 +37,9 @@ public class Team {
 		return playerTeams.containsKey(player.getName());
 	}
 	
-	public static Team getTeam(Player player) {
+	public static String getTeam(Player player) {
 		if(hasTeam(player) == true) {
-			return playerTeams.get(player);
+			return playerTeams.get(player.getName());
 		}
 		else if (hasTeam(player) == false) {
 			return null;

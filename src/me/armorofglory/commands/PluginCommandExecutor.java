@@ -57,10 +57,14 @@ public class PluginCommandExecutor implements CommandExecutor {
 					return true;
 				
 				}
+				
+				else if(args[0].equalsIgnoreCase("removeteam")) {
+					removeTeam.onCommand(sender, cmd, label, args);
+					return true;
 			
 				}
 				
-			
+			}
 		
 		}
 		return false;

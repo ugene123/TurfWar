@@ -2,9 +2,12 @@ package me.armorofglory.handlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.threads.TimerStarter;
 import me.armorofglory.utils.ChatUtils;
 import me.armorofglory.utils.LocationUtils;
 
@@ -17,27 +20,42 @@ public class Game {
 	
 	public static void start() {
 		
+		
+		// Change game state to in-game
 		GameState.setState(GameState.IN_GAME);
 		ChatUtils.broadcast(ChatColor.GOLD + " Game has started!" );
 		hasStarted = true; 
 		
 		
-		
-		
-		Bukkit.getLogger().info(Integer.toString(Team.allTeams.size()));
+		// Divide players online to the teams enabled
+		int i = 0 ;
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (i > Team.allTeams.size() - 1){
+				i = 0;
+			}
+			String teamname = Team.allTeams.get(i);
+			Team.addPlayer(player, teamname);
+			Location spawn = LocationUtils.getTeamSpawn(teamname);
+			player.teleport(spawn);
+			i++;
+		}
 	
-	//	int i = 0 ;
-//		for (Player player : Bukkit.getOnlinePlayers()) {
-//			if (i > Team.getAllTeams().size())
-//				i = 0;
-//			Team.getAllTeams().get(i).add(player);
-//			LocationUtils.teleportToGame(player,Team.getAllTeams().get(i));
-//			i++;
-//		}
+		
+		TimerStarter.start();
 		
 	}
-	public static void stop(Team team) {
+	public static void stop() {
+		// Change hasStarted and GameState back to Lobby
 		hasStarted = false;
+		setCanStart(true);
+		GameState.setState(GameState.POST_GAME);
+		
+		// Teleport players back to Lobby
+		LocationUtils.teleportAllToLobby();
+		ChatUtils.broadcast(ChatColor.GOLD + " Game Over!");
+		
+		// Restart Start Countdown
+//		CountdownManager.resetCounter();
 	}
 	
 	public static boolean canStart() {
