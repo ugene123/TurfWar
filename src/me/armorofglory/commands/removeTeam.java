@@ -16,9 +16,9 @@ public class removeTeam {
 				
 				String team = args[1].toUpperCase();
 				// if newTeam is NOT in allTeams arrayList and is not in Config
-				if(Team.allTeams.contains(team) && (ConfigAccessor.containsPath("Teams." + team))) {
-						Team.allTeams.remove(team);
-						ConfigAccessor.storeList("Settings.allTeams", Team.allTeams);
+				if(Team.containsInAllTeams(team) && (ConfigAccessor.containsPath("Teams." + team))) {
+						Team.removeTeam(team);
+						ConfigAccessor.storeList("Settings.allTeams", Team.getAllTeams());
 						ConfigAccessor.removePath("Teams." + team);
 						ChatUtils.msgSender(sender, "Team " + team + " has been removed!");
 					}  else {

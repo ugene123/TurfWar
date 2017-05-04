@@ -7,15 +7,17 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import me.armorofglory.config.ConfigAccessor;
+
 
 
 public class Team {
 	
-	public static List<String> allTeams = new ArrayList<>();
+	private static List<String> allTeams = new ArrayList<>();
 	
-	public static HashMap<String, Location> teamLocations = new HashMap<String, Location>();
+	private static HashMap<String, Location> teamLocations = new HashMap<String, Location>();
 	
-	public static HashMap<String, String> playerTeams = new HashMap<String, String>();
+	private static HashMap<String, String> playerTeams = new HashMap<String, String>();
 	
 	public String teamname;
 	
@@ -55,6 +57,46 @@ public class Team {
 		return teamname;
 	}
 	
+	
+	/*
+	 * THIS IS ALL TO ACCESS ALLTEAMS LIST 
+	 */
+	
+	public static void registerAllTeams(){
+		allTeams = ConfigAccessor.getList("Settings.allTeams");
+	}
+	
+	public static void backupAllTeams(){
+		ConfigAccessor.storeList("Settings.allTeams", allTeams);
+	}
+	
+	public static int getAllTeamsSize(){
+		return allTeams.size();
+	}
+	
+	public static List<String> getAllTeams() {
+		return allTeams;
+	}
+	
+	public static String getAllTeamsIndex(int index) {
+		return allTeams.get(index);
+	}
+	
+	public static void removeTeam(String team) {
+		allTeams.remove(team);
+	}
+	
+	public static boolean containsInAllTeams(String team) {
+		return allTeams.contains(team);
+	}
+	
+	/*
+	 *  THIS IS TO ACCESS TEAMLOCATIONS HASHMAP
+	 */
+	
+	public static void addTeamLocation(String team, Location location) {
+		teamLocations.put(team, location);
+	}
 	
 	
 //	public static List<Team> activeTeams = new ArrayList<Team>();

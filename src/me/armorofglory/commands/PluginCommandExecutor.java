@@ -58,10 +58,15 @@ public class PluginCommandExecutor implements CommandExecutor {
 				
 				}
 				
-				else if(args[0].equalsIgnoreCase("removeteam")) {
+				else if(args[0].equalsIgnoreCase("delteam")) {
 					removeTeam.onCommand(sender, cmd, label, args);
 					return true;
 			
+				}
+				
+				else if(args[0].equalsIgnoreCase("setteamblock")) {
+					setTeamBlock.onCommand(sender, cmd, label, args);
+					return true;
 				}
 				
 			}

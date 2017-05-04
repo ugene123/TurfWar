@@ -24,7 +24,7 @@ public class TimerManager extends BukkitRunnable{
 				
 				if(counter >= 0) {
 					
-					ScoreboardManager.setCounterTitle("Time Left:");
+					ScoreboardManager.updateGameboard();
 					
 					if(counter > 20) {
 						ScoreboardManager.setCounter("§r" + counter);

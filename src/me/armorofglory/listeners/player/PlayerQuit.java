@@ -22,7 +22,7 @@ public class PlayerQuit implements Listener{
 		
 		if(GameState.isState(GameState.LOBBY)) {
 			
-			if (Bukkit.getOnlinePlayers().size() - 1 >= Game.minPlayersToStart) {
+			if (Bukkit.getOnlinePlayers().size() - 1 >= Game.getMinPlayersToStart()) {
 				
 				// Players online is greater than minPlayersToStart
 				Game.setCanStart(true);
@@ -40,7 +40,7 @@ public class PlayerQuit implements Listener{
 		
 		if (GameState.isState(GameState.IN_GAME)) {
 				
-				if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.minPlayersToStart)) {
+				if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.getMinPlayersToStart())) {
 					for (Player player : Bukkit.getOnlinePlayers()){
 						LocationUtils.teleportToLobby(player);
 						GameState.setState(GameState.LOBBY);
@@ -56,6 +56,8 @@ public class PlayerQuit implements Listener{
 			if(Team.hasTeam(player))
 				Team.removePlayer(player);
 		}
+		
 		ScoreboardManager.getPlayersOnline();
+		ScoreboardManager.updateLobbyboard();
 	}
 }

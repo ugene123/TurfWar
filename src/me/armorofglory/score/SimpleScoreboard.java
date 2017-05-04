@@ -80,8 +80,7 @@ public class SimpleScoreboard {
                 for (Map.Entry<String, Integer> text : scores.entrySet()) {
                         Map.Entry<Team, String> team = createTeam(text.getKey());
                         Integer score = text.getValue() != null ? text.getValue() : index;
-                        @SuppressWarnings("deprecation")
-						OfflinePlayer player = Bukkit.getOfflinePlayer(team.getValue());
+                        OfflinePlayer player = Bukkit.getOfflinePlayer(team.getValue());
                         if (team.getKey() != null)
                                 team.getKey().addPlayer(player);
                         obj.getScore(player).setScore(score);

@@ -1,5 +1,6 @@
 package me.armorofglory.handlers;
 
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.TimerStarter;
 import me.armorofglory.utils.ChatUtils;
 import me.armorofglory.utils.LocationUtils;
@@ -14,7 +16,7 @@ import me.armorofglory.utils.LocationUtils;
 public class Game {
 	
 	
-	public static int minPlayersToStart = ConfigAccessor.getInt("Settings.minPlayersToStart");
+	private static int minPlayersToStart = ConfigAccessor.getInt("Settings.minPlayersToStart");
 	private static boolean canStart = false;
 	private static boolean hasStarted = false;
 	
@@ -30,10 +32,10 @@ public class Game {
 		// Divide players online to the teams enabled
 		int i = 0 ;
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (i > Team.allTeams.size() - 1){
+			if (i > Team.getAllTeamsSize() - 1){
 				i = 0;
 			}
-			String teamname = Team.allTeams.get(i);
+			String teamname = Team.getAllTeamsIndex(i);
 			Team.addPlayer(player, teamname);
 			Location spawn = LocationUtils.getTeamSpawn(teamname);
 			player.teleport(spawn);
@@ -44,18 +46,23 @@ public class Game {
 		TimerStarter.start();
 		
 	}
+	
 	public static void stop() {
 		// Change hasStarted and GameState back to Lobby
 		hasStarted = false;
 		setCanStart(true);
 		GameState.setState(GameState.POST_GAME);
+		ScoreboardManager.updatePostboard();
 		
 		// Teleport players back to Lobby
 		LocationUtils.teleportAllToLobby();
 		ChatUtils.broadcast(ChatColor.GOLD + " Game Over!");
 		
+		// Reset Arena
+		Arena.resetArena();
+		
 		// Restart Start Countdown
-//		CountdownManager.resetCounter();
+		// CountdownManager.resetCounter();
 	}
 	
 	public static boolean canStart() {
@@ -69,4 +76,9 @@ public class Game {
 	public static void setCanStart(boolean b) {
 		canStart = b;
 	}
+	
+	public static int getMinPlayersToStart() {
+		return minPlayersToStart;
+	}
+	
 }

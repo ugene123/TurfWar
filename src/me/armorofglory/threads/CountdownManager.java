@@ -19,13 +19,15 @@ public class CountdownManager extends BukkitRunnable {
 	}
 	
 	public void run() {
+		
 		if (GameState.isState(GameState.LOBBY)) {
+			
 			if(Game.canStart()) {
 				
 				if(counter >= 0) {
 					
-					ScoreboardManager.setCounterTitle("Countdown:");
 					ScoreboardManager.setCounter(counter + "");
+					ScoreboardManager.updateLobbyboard();
 					
 					if(counter % 10 == 0 && counter > 0) {
 						

@@ -8,8 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.armorofglory.commands.PluginCommandExecutor;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
+import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.listeners.entity.EntityDamageByEntity;
+import me.armorofglory.listeners.player.BlockBreak;
 import me.armorofglory.listeners.player.AsyncPlayerPreLogin;
 import me.armorofglory.listeners.player.PlayerDeath;
 import me.armorofglory.listeners.player.PlayerJoin;
@@ -41,9 +43,10 @@ public class Warfare extends JavaPlugin {
 		// Reset game to lobby and cannot start
 		GameState.setState(GameState.LOBBY);
 		Game.setCanStart(false);
+		Points.registerTeams();
 		
 		// Pull allTeams array from config
-		Team.allTeams = ConfigAccessor.getList("Settings.allTeams");
+		Team.registerAllTeams();
 		
 		// register GameTimer
 		new TimerStarter(this);
@@ -51,11 +54,11 @@ public class Warfare extends JavaPlugin {
 		// register startcountdown and start thread
 		new CountdownStarter(this);
 		CountdownStarter.start();
+		
 	}
 	
 	public void onDisable() {
-		ConfigAccessor.storeList("Settings.allTeams", Team.allTeams);
-
+		Team.backupAllTeams();
 		plugin = null;
 	}
 	
@@ -68,6 +71,7 @@ public class Warfare extends JavaPlugin {
 	    pm.registerEvents(new AsyncPlayerPreLogin(), this);
 	    pm.registerEvents(new PlayerRespawn(), this);
 	    pm.registerEvents(new EntityDamageByEntity(), this);
+	    pm.registerEvents(new BlockBreak(), this);
 	}
 	
 	

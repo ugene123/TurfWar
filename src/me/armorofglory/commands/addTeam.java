@@ -16,10 +16,10 @@ public class addTeam {
 				
 				String team = args[1].toUpperCase();
 				// if newTeam is NOT in allTeams arrayList and is not in Config
-				if(Team.allTeams.contains(team) != true && (ConfigAccessor.containsPath("Teams." + team) == false)) {
+				if(Team.containsInAllTeams(team) != true && (ConfigAccessor.containsPath("Teams." + team) == false)) {
 						new Team(team);
 						ConfigAccessor.createPath("Teams." + team);
-						ConfigAccessor.storeList("Settings.allTeams", Team.allTeams);
+						ConfigAccessor.storeList("Settings.allTeams", Team.getAllTeams());
 						ChatUtils.msgSender(sender, "Team " + team + " has been created!");
 					}  else {
 					ChatUtils.msgSender(sender, "Team " + team + " already exists!");

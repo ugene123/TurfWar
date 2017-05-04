@@ -19,7 +19,7 @@ public class setTeamSpawn {
 			
 			String team = args[1].toUpperCase();
 		
-			if(Team.allTeams.contains(team)) {
+			if(Team.containsInAllTeams(team)) {
 				
 				// Get player location
 				Player player = (Player) sender;
@@ -36,7 +36,7 @@ public class setTeamSpawn {
 				ConfigAccessor.storeString("Teams." + team + ".Location", spawn);
 				ChatUtils.msgPlayer(player, "Team " + team + " spawn has been set!");
 				Location teamspawn = LocationUtils.getTeamSpawn(team);
-				Team.teamLocations.put(team, teamspawn);
+				Team.addTeamLocation(team, teamspawn);
 		
 			} else {
 				

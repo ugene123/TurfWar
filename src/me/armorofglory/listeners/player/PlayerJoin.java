@@ -19,7 +19,7 @@ public class PlayerJoin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event){
 	
 		
-		if (Bukkit.getOnlinePlayers().size() >= Game.minPlayersToStart) {
+		if (Bukkit.getOnlinePlayers().size() >= Game.getMinPlayersToStart()) {
 			
 			// Do this if the players online is equal to or greater than minPlayersToStart
 			Game.setCanStart(true);
@@ -44,6 +44,7 @@ public class PlayerJoin implements Listener {
 		} 
 		
 		ScoreboardManager.getPlayersOnline();
+		ScoreboardManager.updateLobbyboard();
 
 		}
 	
