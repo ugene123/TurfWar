@@ -1,12 +1,12 @@
 package me.armorofglory.threads;
 
-import me.armorofglory.Warfare;
+import me.armorofglory.Turfwar;
 
 public class CountdownStarter {
 
-	static Warfare plugin;
+	static Turfwar plugin;
 	
-	public CountdownStarter(Warfare plugin) {
+	public CountdownStarter(Turfwar plugin) {
 		CountdownStarter.plugin = plugin;
 	
 	}

@@ -23,7 +23,7 @@ import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
 import me.armorofglory.threads.TimerStarter;
 
-public class Warfare extends JavaPlugin {
+public class Turfwar extends JavaPlugin {
 	
 	private static Plugin plugin; 
 	

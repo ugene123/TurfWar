@@ -1,12 +1,12 @@
 package me.armorofglory.threads;
 
-import me.armorofglory.Warfare;
+import me.armorofglory.Turfwar;
 
 public class TimerStarter {
 
-	static Warfare plugin;
+	static Turfwar plugin;
 	
-	public TimerStarter(Warfare plugin) {
+	public TimerStarter(Turfwar plugin) {
 		TimerStarter.plugin = plugin;
 	
 	}

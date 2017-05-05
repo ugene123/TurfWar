@@ -5,12 +5,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.armorofglory.Warfare;
+import me.armorofglory.Turfwar;
 import me.armorofglory.utils.ChatUtils;
 
 public class PluginCommandExecutor implements CommandExecutor {
 
-	public PluginCommandExecutor(Warfare warfare) {
+	public PluginCommandExecutor(Turfwar warfare) {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]){

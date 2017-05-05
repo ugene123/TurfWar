@@ -5,12 +5,12 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
-import me.armorofglory.Warfare;
+import me.armorofglory.Turfwar;
 
 
 public class ConfigAccessor {
 	
-	private static Plugin plugin = Warfare.getPlugin();
+	private static Plugin plugin = Turfwar.getPlugin();
 	
 	
 	public static void storeInt(String path, int Int) {
