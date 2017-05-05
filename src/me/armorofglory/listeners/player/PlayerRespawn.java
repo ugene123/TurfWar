@@ -22,7 +22,7 @@ public class PlayerRespawn implements Listener {
         	Location spawn = LocationUtils.getTeamSpawn(teamname);
             event.setRespawnLocation(spawn);
         	
-        } else if (GameState.isState(GameState.LOBBY)) {
+        } else {
         	
     		event.setRespawnLocation(LocationUtils.lobbySpawn);
         }

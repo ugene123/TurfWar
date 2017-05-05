@@ -7,16 +7,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.armorofglory.commands.PluginCommandExecutor;
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.handlers.Arena;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.listeners.entity.EntityDamageByEntity;
 import me.armorofglory.listeners.player.BlockBreak;
+import me.armorofglory.listeners.player.BlockPlace;
 import me.armorofglory.listeners.player.AsyncPlayerPreLogin;
 import me.armorofglory.listeners.player.PlayerDeath;
 import me.armorofglory.listeners.player.PlayerJoin;
 import me.armorofglory.listeners.player.PlayerQuit;
 import me.armorofglory.listeners.player.PlayerRespawn;
+import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
 import me.armorofglory.threads.TimerStarter;
 
@@ -55,10 +58,15 @@ public class Warfare extends JavaPlugin {
 		new CountdownStarter(this);
 		CountdownStarter.start();
 		
+		ScoreboardManager.updateLobbyboard();
+		
+		Arena.save();
+		
 	}
 	
 	public void onDisable() {
 		Team.backupAllTeams();
+		Arena.reset();
 		plugin = null;
 	}
 	
@@ -72,6 +80,7 @@ public class Warfare extends JavaPlugin {
 	    pm.registerEvents(new PlayerRespawn(), this);
 	    pm.registerEvents(new EntityDamageByEntity(), this);
 	    pm.registerEvents(new BlockBreak(), this);
+	    pm.registerEvents(new BlockPlace(), this);
 	}
 	
 	

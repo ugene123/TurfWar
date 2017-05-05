@@ -11,9 +11,8 @@ public class ScoreboardManager {
 	
 	private static String GameState = "";
 	
-	private static String counter = "0";
-	
-	private static int onlinePlayers = 0;
+	private static String counter = "Paused";
+
 	
 	
 	public static void updateLobbyboard() {
@@ -25,11 +24,9 @@ public class ScoreboardManager {
 		    scoreboard.add("§eGameState:");
 		    scoreboard.add(" " + GameState);
 		    scoreboard.blankLine();
-		    scoreboard.add("§eTime Until Start");
+		    scoreboard.add("§eCountdown:");
 		    scoreboard.add(" " + counter);
 		    scoreboard.blankLine();
-		    scoreboard.add("§ePlayers:");
-		    scoreboard.add(" " + onlinePlayers + " / 10");
 		    scoreboard.blankLine();
 		    scoreboard.add("§ewww.turfwars.co");
 		    // call this to create the scoreboard, nothing will happen if you forget to call this
@@ -52,7 +49,7 @@ public class ScoreboardManager {
 		    scoreboard.add("§eTime Remaining:" );
 		    scoreboard.add(" " + counter);
 		    scoreboard.blankLine();
-		    scoreboard.add("§ePoints:" );
+		    scoreboard.add("§eScore:" );
 		    scoreboard.add(" Blue: " + Points.getPoints("BLUE"));
 		    scoreboard.add(" Red: " + Points.getPoints("RED"));
 		    scoreboard.blankLine();
@@ -75,11 +72,8 @@ public class ScoreboardManager {
 		    scoreboard.add(" " + GameState);
 		    scoreboard.blankLine();
 		    scoreboard.add("§eWinning Team:" );
-		    scoreboard.add(" ");
+		    scoreboard.add(" " + Points.getWinningTeam());
 		    scoreboard.blankLine();
-		    scoreboard.add("§ePoints:" );
-		    scoreboard.add(" Blue: " + Points.getPoints("BLUE"));
-		    scoreboard.add(" Red: " + Points.getPoints("RED"));
 		    scoreboard.blankLine();
 		    scoreboard.add("§ewww.turfwars.co");
 		    // call this to create the scoreboard, nothing will happen if you forget to call this
@@ -97,10 +91,6 @@ public class ScoreboardManager {
 	public static void setCounter(String string) {
 		counter = string;
 		
-	}
-	
-	public static void getPlayersOnline() {
-		onlinePlayers = Bukkit.getOnlinePlayers().size();
 	}
 	
 }

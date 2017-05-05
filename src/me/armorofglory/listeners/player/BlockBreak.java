@@ -1,15 +1,14 @@
 package me.armorofglory.listeners.player;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import me.armorofglory.config.ConfigAccessor;
-import me.armorofglory.handlers.Arena;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
@@ -21,40 +20,49 @@ public class BlockBreak implements Listener {
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		
 		if (Game.gethasStarted()) {
 			
-			Location loc = event.getBlock().getLocation();
-			Material material = event.getBlock().getType();
-			Arena.addChangedBlock(loc, material);
-			
+			Block block = event.getBlock();
 			
 			Player player = event.getPlayer();
 			String team = Team.getTeam(player);
 			
+			// Get block broken in format as store in config
+			String BlockBroken = block.getTypeId() + ":" + block.getData();
+			
+			if (block.getType() == Material.GLASS) {
+				ChatUtils.msgPlayer(player, ChatColor.RED + "You're not allowed to exit the arena!");
+				event.setCancelled(true);
+			}
+			
+			
+			// If there are more team colors, add them here!
 			if (team.equals("RED")) {
 				
-				if (event.getBlock().getType().toString().equals(ConfigAccessor.getString("Teams.BLUE.TeamBlock"))) {
-					Points.addPoint(team);
+				if (BlockBroken.equals(ConfigAccessor.getString("Teams.BLUE.TeamBlock"))) {
+					Points.add(team, 1);
 					ScoreboardManager.updateGameboard();
 				}
 				
 			} else if (team.equals("BLUE")){
 				
-				if (event.getBlock().getType().toString().equals(ConfigAccessor.getString("Teams.RED.TeamBlock"))) {
-					Points.addPoint(team);
+				if (BlockBroken.equals(ConfigAccessor.getString("Teams.RED.TeamBlock"))) {
+					Points.add(team, 1);
 					ScoreboardManager.updateGameboard();
 				}
 				
 			}
 			
+			
 		} else {
 	
 			event.setCancelled(true);
 			Player player = event.getPlayer();
-			ChatUtils.msgPlayer(player, ChatColor.RED + "You cannot break blocks here!");
+			ChatUtils.msgPlayer(player, ChatColor.RED + "You can't break blocks here!");
 		}
 	}
 	

@@ -10,7 +10,7 @@ import me.armorofglory.config.ConfigAccessor;
 public class ChatUtils {
 	
 	private static String starter() {
-		return ConfigAccessor.getString("Messages.PREFIX");
+		return ConfigAccessor.getStringWithColor("Messages.PREFIX");
 	}
 	
 	public static void broadcast(String string) {

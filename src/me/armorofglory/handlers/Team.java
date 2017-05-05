@@ -97,6 +97,7 @@ public class Team {
 	public static void addTeamLocation(String team, Location location) {
 		teamLocations.put(team, location);
 	}
+
 	
 	
 //	public static List<Team> activeTeams = new ArrayList<Team>();

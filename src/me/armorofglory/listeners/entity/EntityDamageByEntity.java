@@ -7,7 +7,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Team;
-import me.armorofglory.utils.ChatUtils;
 
 public class EntityDamageByEntity implements Listener {
 
@@ -27,9 +26,6 @@ public class EntityDamageByEntity implements Listener {
 		
 		if (Team.getTeam(player) == Team.getTeam(damager)){
 			event.setCancelled(true);
-		} else {
-			ChatUtils.msgPlayer(player, damager.getName() + " has hit you!");
-			ChatUtils.msgPlayer(damager, player.getName() + " took a hit from you!");
 		}
 	}
 }

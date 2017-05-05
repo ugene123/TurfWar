@@ -59,7 +59,8 @@ public class Game {
 		ChatUtils.broadcast(ChatColor.GOLD + " Game Over!");
 		
 		// Reset Arena
-		Arena.resetArena();
+		Arena.reset();
+		
 		
 		// Restart Start Countdown
 		// CountdownManager.resetCounter();

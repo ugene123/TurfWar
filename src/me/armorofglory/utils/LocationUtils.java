@@ -48,7 +48,12 @@ public class LocationUtils {
         			Float.parseFloat(split[5]));
         	
 			return loc;
-       
+		} else if(split.length == 4){
+			// Create a new loc by splitting up the args with ', '
+						Location loc = new Location(Bukkit.getWorld(split[0]), 
+			        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
+			        			Double.parseDouble(split[3]));
+						return loc;
         }else{
         
         	return null;

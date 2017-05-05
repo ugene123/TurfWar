@@ -10,7 +10,6 @@ import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Team;
-import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownManager;
 import me.armorofglory.utils.ChatUtils;
 import me.armorofglory.utils.LocationUtils;
@@ -57,7 +56,5 @@ public class PlayerQuit implements Listener{
 				Team.removePlayer(player);
 		}
 		
-		ScoreboardManager.getPlayersOnline();
-		ScoreboardManager.updateLobbyboard();
 	}
 }

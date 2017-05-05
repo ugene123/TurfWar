@@ -39,6 +39,11 @@ public class PluginCommandExecutor implements CommandExecutor {
 					ChatUtils.msgSender(sender, "Use /tw setteamspawn <team>");
 				}
 				
+				else if(args[0].equalsIgnoreCase("savearena")) {
+					saveArena.onCommand(sender, cmd, label, args);
+					return true;	
+				}
+				
 				else {
 					// First Arguement is not a valid command
 					ChatUtils.msgSender(sender, "That is not a valid command! See " + ChatColor.YELLOW + "/turfwar help");
@@ -69,9 +74,16 @@ public class PluginCommandExecutor implements CommandExecutor {
 					return true;
 				}
 				
+				else if(args[0].equalsIgnoreCase("setcorner")) {
+					setCorner.onCommand(sender, cmd, label, args);
+					return true;
+				}
+				
 			}
 		
 		}
 		return false;
 	}
 }
+
+

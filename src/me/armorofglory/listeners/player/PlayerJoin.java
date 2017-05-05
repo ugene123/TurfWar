@@ -27,7 +27,7 @@ public class PlayerJoin implements Listener {
 		} else {
 			
 			// Do this if the players online is less than minPlayersToStart
-			ChatUtils.broadcast(ConfigAccessor.getString("Messages.Errors.notEnoughPlayersOnline"));
+			ChatUtils.broadcast(ConfigAccessor.getStringWithColor("Messages.Errors.notEnoughPlayersOnline"));
 		}
 		
 		//Reset Player's hunger & hunger levels
@@ -41,11 +41,10 @@ public class PlayerJoin implements Listener {
 			// Teleport player to the lobby location
 			LocationUtils.teleportToLobby(player);
 			
-		} 
-		
-		ScoreboardManager.getPlayersOnline();
-		ScoreboardManager.updateLobbyboard();
+			}
 
+		ScoreboardManager.updateLobbyboard();
 		}
+		
 	
 }

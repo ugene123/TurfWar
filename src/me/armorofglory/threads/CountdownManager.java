@@ -1,5 +1,6 @@
 package me.armorofglory.threads;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,6 +22,9 @@ public class CountdownManager extends BukkitRunnable {
 	public void run() {
 		
 		if (GameState.isState(GameState.LOBBY)) {
+			
+			if (Bukkit.getOnlinePlayers().size() >= Game.getMinPlayersToStart())
+				Game.setCanStart(true);
 			
 			if(Game.canStart()) {
 				

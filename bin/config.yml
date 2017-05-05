@@ -8,8 +8,12 @@
 Settings:
   minPlayersToStart: 2
   startCountdownTimer: 10
-  gameDuration: 3
+  gameDuration: 30
   allTeams: []
+  Points:
+    pointsPerKill: 10
+    pointsPerBlock: 1 
+    pointsPerDeposit: 3
   
 # Configure Plugin messages
 Messages:

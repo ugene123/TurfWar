@@ -48,9 +48,14 @@ public class ConfigAccessor {
 		return plugin.getConfig().getInt(path);
 	}
 	
-	public static String getString(String path) {
+	public static String getStringWithColor(String path) {
 		String string = plugin.getConfig().getString(path);
 		return ChatColor.translateAlternateColorCodes('&', string);
+	}
+	
+	public static String getString(String path) {
+		String string = plugin.getConfig().getString(path);
+		return string;
 	}
 	
 	public static double getDouble(String path) {
@@ -84,5 +89,15 @@ public class ConfigAccessor {
 	public static void reloadConfiguration() {
 		plugin.reloadConfig();
 	}
+	
+	public static void storeObject(String path , Object object) {
+		plugin.getConfig().set(path, object);
+		plugin.saveConfig();
+	}
+	public static Object getObject(String path) {
+		plugin.reloadConfig();
+		return plugin.getConfig().get(path);
+	}
+
 
 }
