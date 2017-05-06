@@ -1,4 +1,4 @@
 # TurfWar
-## made by ArmorofGlory
+## Made by ArmorofGlory
 A fancy bukkit mini-game.
 
