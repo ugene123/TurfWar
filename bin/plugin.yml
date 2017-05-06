@@ -1,5 +1,5 @@
 name: TurfWar
-main: me.armorofglory.Warfare
+main: me.armorofglory.Turfwar
 version: 1.0
 
 commands:

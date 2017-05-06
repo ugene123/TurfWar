@@ -29,6 +29,7 @@ public class Turfwar extends JavaPlugin {
 	
 	public static Plugin getPlugin() {
 		return plugin;
+		
 	}
 	
 	

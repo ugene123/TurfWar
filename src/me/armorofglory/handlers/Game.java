@@ -39,6 +39,7 @@ public class Game {
 			Team.addPlayer(player, teamname);
 			Location spawn = LocationUtils.getTeamSpawn(teamname);
 			player.teleport(spawn);
+			Armor.setArmor(Team.getTeam(player), player);
 			i++;
 		}
 	
@@ -61,6 +62,9 @@ public class Game {
 		// Reset Arena
 		Arena.reset();
 		
+		for(Player player : Bukkit.getOnlinePlayers())
+			Armor.strip(player);
+			
 		
 		// Restart Start Countdown
 		// CountdownManager.resetCounter();

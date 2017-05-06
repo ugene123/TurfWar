@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import me.armorofglory.GameState;
+import me.armorofglory.handlers.Armor;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.utils.LocationUtils;
 
@@ -21,6 +22,7 @@ public class PlayerRespawn implements Listener {
         	String teamname = Team.getTeam(player);
         	Location spawn = LocationUtils.getTeamSpawn(teamname);
             event.setRespawnLocation(spawn);
+            Armor.setArmor(Team.getTeam(player), player);
         	
         } else {
         	
