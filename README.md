@@ -1,5 +1,4 @@
-# Warfare
-Bukkit minigame
+# TurfWar
+## Made by ArmorofGlory
+A fancy bukkit mini-game.
 
-Used TheBCBroz youtube tutorial to create this mini-game. Watch the videos:
-https://www.youtube.com/watch?v=45JgCUXjkwk
