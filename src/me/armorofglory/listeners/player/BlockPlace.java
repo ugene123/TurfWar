@@ -48,7 +48,7 @@ public class BlockPlace implements Listener {
 			
 		} else {
 	
-			event.setCancelled(true);
+//			event.setCancelled(true);
 			Player player = event.getPlayer();
 			ChatUtils.msgPlayer(player, ChatColor.RED + "You cannot place blocks here!");
 		}

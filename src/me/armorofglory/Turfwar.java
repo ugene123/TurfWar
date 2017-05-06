@@ -19,6 +19,8 @@ import me.armorofglory.listeners.player.PlayerDeath;
 import me.armorofglory.listeners.player.PlayerJoin;
 import me.armorofglory.listeners.player.PlayerQuit;
 import me.armorofglory.listeners.player.PlayerRespawn;
+import me.armorofglory.listeners.player.SignChange;
+import me.armorofglory.listeners.player.SignClick;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
 import me.armorofglory.threads.TimerStarter;
@@ -81,6 +83,8 @@ public class Turfwar extends JavaPlugin {
 	    pm.registerEvents(new EntityDamageByEntity(), this);
 	    pm.registerEvents(new BlockBreak(), this);
 	    pm.registerEvents(new BlockPlace(), this);
+	    pm.registerEvents(new SignClick(), this);
+	    pm.registerEvents(new SignChange(), this);
 	}
 	
 	
