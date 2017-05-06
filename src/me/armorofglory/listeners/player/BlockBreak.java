@@ -60,7 +60,7 @@ public class BlockBreak implements Listener {
 			
 		} else {
 	
-			event.setCancelled(true);
+//			event.setCancelled(true);
 			Player player = event.getPlayer();
 			ChatUtils.msgPlayer(player, ChatColor.RED + "You can't break blocks here!");
 		}

@@ -21,6 +21,7 @@ public class Team {
 	
 	public String teamname;
 	
+	
 	public Team(String teamName){
 		this.teamname = teamName;
 		allTeams.add(teamName);
