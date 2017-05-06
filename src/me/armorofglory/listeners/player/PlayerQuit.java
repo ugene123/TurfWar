@@ -33,27 +33,29 @@ public class PlayerQuit implements Listener{
 				Game.setCanStart(false);
 				CountdownManager.resetCounter();
 				ChatUtils.broadcast(ConfigAccessor.getString("Messages.Errors.notEnoughPlayersOnline"));
-				}
+			}
 			
 		}
 		
 		if (GameState.isState(GameState.IN_GAME)) {
-				
-				if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.getMinPlayersToStart())) {
-					for (Player player : Bukkit.getOnlinePlayers()){
-						LocationUtils.teleportToLobby(player);
-						GameState.setState(GameState.LOBBY);
-						ChatUtils.msgPlayer(player, "There's not enough players online!");
-					}
-
+			
+			if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.getMinPlayersToStart())) {
+				for (Player player : Bukkit.getOnlinePlayers()){
+					LocationUtils.teleportToLobby(player);
+					GameState.setState(GameState.LOBBY);
+					ChatUtils.msgPlayer(player, "There's not enough players online!");
 				}
+				
+			}
+			
 		}
 		
 		Player player = event.getPlayer();
 		
-		if(GameState.isState(GameState.IN_GAME)){
-			if(Team.hasTeam(player))
-				Team.removePlayer(player);
+		if(GameState.isState(GameState.IN_GAME)) {
+			if(Team.hasPlayer(player)) {
+				Team.getPlayerTeam(player).removePlayer(player);
+			}
 		}
 		
 	}

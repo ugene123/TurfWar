@@ -44,7 +44,7 @@ public class PlayerJoin implements Listener {
 			}
 
 		ScoreboardManager.updateLobbyboard();
-		}
+	}
 		
 	
 }

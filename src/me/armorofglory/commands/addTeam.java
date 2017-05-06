@@ -13,20 +13,29 @@ public class addTeam {
 	public static boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
 		
 		if(sender instanceof Player) {
-				
-				String team = args[1].toUpperCase();
-				// if newTeam is NOT in allTeams arrayList and is not in Config
-				if(Team.containsInAllTeams(team) != true && (ConfigAccessor.containsPath("Teams." + team) == false)) {
-						new Team(team);
-						ConfigAccessor.createPath("Teams." + team);
-						ConfigAccessor.storeList("Settings.allTeams", Team.getAllTeams());
-						ChatUtils.msgSender(sender, "Team " + team + " has been created!");
-					}  else {
-					ChatUtils.msgSender(sender, "Team " + team + " already exists!");
-				}
-		
-			} else {
 			
+			String teamName = args[1].toUpperCase();
+			
+			// if newTeam is NOT in allTeams and is not in Config
+			if(!Team.hasTeam(teamName) /*&& !ConfigAccessor.containsPath("Teams." + teamName)*/) {
+				Team team = Team.create(teamName);
+				
+				if (team != null) {
+					ConfigAccessor.createPath("Teams." + teamName);
+					ConfigAccessor.storeList("Settings.allTeams", Team.getTeamNames());
+					ChatUtils.msgSender(sender, "Team " + teamName + " has been created!");
+				
+				} else {
+					// team cannot be created
+					ChatUtils.msgSender(sender, "Cannot create team " + teamName + "!");
+				}
+				
+			}  else {
+				// team already exists
+				ChatUtils.msgSender(sender, "Team " + teamName + " already exists!");
+			}
+	
+		} else {
 			// Sender is not a player
 			ChatUtils.msgSender(sender, "You can only use this command in-game!");
 		}

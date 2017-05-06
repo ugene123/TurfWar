@@ -14,13 +14,16 @@ public class setTeamSpawn {
 	public static boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 	    
 		if ((sender instanceof Player)) {
-	      
-			String team = args[1].toUpperCase();
+			
+			String teamName = args[1].toUpperCase();
 	    
-			if (Team.containsInAllTeams(team))  {
-		        Player player = (Player)sender;
+			if (Team.hasTeam(teamName))  {
+				Team team = Team.getTeam(teamName);
+				
+		        Player player = (Player) sender;
 		        Location loc = player.getLocation();
 		        String world = loc.getWorld().getName();
+
 		        double x = loc.getX();
 		        double y = loc.getY();
 		        double z = loc.getZ();
@@ -28,16 +31,16 @@ public class setTeamSpawn {
 		        double pitch = loc.getPitch();
 		        
 		        String spawn = world + ", " + x + ", " + y + ", " + z + ", " + yaw + ", " + pitch;
-		        ConfigAccessor.storeString("Teams." + team + ".Location", spawn);
-		        ChatUtils.msgPlayer(player, "Team " + team + " spawn has been set!");
-		        Location teamspawn = LocationUtils.getTeamSpawn(team);
-		        Team.addTeamLocation(team, teamspawn);
+		        ConfigAccessor.storeString("Teams." + teamName + ".Location", spawn);
+		        ChatUtils.msgPlayer(player, "Team " + teamName + " spawn has been set!");
+		        
+		        Location teamspawn = LocationUtils.getTeamSpawn(teamName);
+		        team.setSpawn(teamspawn);
+		        
+			} else {
+				ChatUtils.msgSender(sender, "Team " + teamName + " does not exist!");
 			}
-			else {
-				
-				ChatUtils.msgSender(sender, "Team " + team + " does not exist!");
-				
-			}
+			
 		}
 	    else
 	    {

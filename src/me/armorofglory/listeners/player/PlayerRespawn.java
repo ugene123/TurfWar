@@ -19,10 +19,10 @@ public class PlayerRespawn implements Listener {
         
 		if(GameState.isState(GameState.IN_GAME)){
         	
-        	String teamname = Team.getTeam(player);
-        	Location spawn = LocationUtils.getTeamSpawn(teamname);
+        	Team team = Team.getPlayerTeam(player);
+        	Location spawn = team.getSpawn();
             event.setRespawnLocation(spawn);
-            Armor.setArmor(Team.getTeam(player), player);
+            Armor.setArmor(Team.getPlayerTeam(player).getColor(), player);
         	
         } else {
         	

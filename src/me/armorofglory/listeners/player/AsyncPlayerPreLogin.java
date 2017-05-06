@@ -12,7 +12,7 @@ public class AsyncPlayerPreLogin implements Listener {
 	
 	@EventHandler
 	public void playerPreLogin(AsyncPlayerPreLoginEvent event) {
-		if(Game.gethasStarted())
+		if(Game.hasStarted())
 			event.disallow(Result.KICK_OTHER, ChatColor.RED + "The game has already started!");
 	}
 }

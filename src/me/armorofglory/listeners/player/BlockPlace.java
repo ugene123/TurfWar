@@ -21,26 +21,25 @@ public class BlockPlace implements Listener {
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		
-		if (Game.gethasStarted()) {
+		if (Game.hasStarted()) {
 	
 			Block block = event.getBlock();
 			
 			Player player = event.getPlayer();
-			String team = Team.getTeam(player);
+			Team team = Team.getPlayerTeam(player);
 		
 			// Change to string as in config
+			// TODO: use block.getType().name();
 			String BlockPlaced = block.getTypeId() + ":" + block.getData();
 			
-		
 			// If player tries to place their opponents block, prevents exploiting the game
 			// If there are more teams, add here!
-			if (team.equals("RED")) {
+			if (team.getName().equals("RED")) {
 				
 				if (BlockPlaced.equals(ConfigAccessor.getString("Teams.BLUE.TeamBlock")))
 					event.setCancelled(true);
-	
 				
-			} else if (team.equals("BLUE")){
+			} else if (team.getName().equals("BLUE")){
 				
 				if (BlockPlaced.equals(ConfigAccessor.getString("Teams.RED.TeamBlock"))) 
 					event.setCancelled(true);

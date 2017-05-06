@@ -12,7 +12,6 @@ public class ConfigAccessor {
 	
 	private static Plugin plugin = Turfwar.getPlugin();
 	
-	
 	public static void storeInt(String path, int Int) {
 		plugin.getConfig().set(path, Int);
 		plugin.saveConfig();

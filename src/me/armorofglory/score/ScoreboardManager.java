@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.armorofglory.handlers.Points;
+import me.armorofglory.handlers.Team;
 
 
 public class ScoreboardManager {
@@ -50,8 +51,8 @@ public class ScoreboardManager {
 		    scoreboard.add(" " + counter);
 		    scoreboard.blankLine();
 		    scoreboard.add("§eScore:" );
-		    scoreboard.add(" Blue: " + Points.getPoints("BLUE"));
-		    scoreboard.add(" Red: " + Points.getPoints("RED"));
+		    scoreboard.add(" Blue: " + Team.getTeam("BLUE").getPoints());
+		    scoreboard.add(" Red: " + Team.getTeam("RED").getPoints());
 		    scoreboard.blankLine();
 		    scoreboard.add("§ewww.turfwars.co");
 		    // call this to create the scoreboard, nothing will happen if you forget to call this
@@ -72,7 +73,7 @@ public class ScoreboardManager {
 		    scoreboard.add(" " + GameState);
 		    scoreboard.blankLine();
 		    scoreboard.add("§eWinning Team:" );
-		    scoreboard.add(" " + Points.getWinningTeam());
+		    scoreboard.add(" " + Team.getWinner().getName());
 		    scoreboard.blankLine();
 		    scoreboard.blankLine();
 		    scoreboard.add("§ewww.turfwars.co");

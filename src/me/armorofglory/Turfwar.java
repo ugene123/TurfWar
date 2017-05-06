@@ -47,7 +47,6 @@ public class Turfwar extends JavaPlugin {
 		// Reset game to lobby and cannot start
 		GameState.setState(GameState.LOBBY);
 		Game.setCanStart(false);
-		Points.registerTeams();
 		
 		// Pull allTeams array from config
 		Team.registerAllTeams();
@@ -61,7 +60,7 @@ public class Turfwar extends JavaPlugin {
 		
 		ScoreboardManager.updateLobbyboard();
 		
-		Arena.save();
+		//Arena.save();
 		
 	}
 	

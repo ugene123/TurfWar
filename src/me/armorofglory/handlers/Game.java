@@ -15,7 +15,6 @@ import me.armorofglory.utils.LocationUtils;
 
 public class Game {
 	
-	
 	private static int minPlayersToStart = ConfigAccessor.getInt("Settings.minPlayersToStart");
 	private static boolean canStart = false;
 	private static boolean hasStarted = false;
@@ -32,17 +31,23 @@ public class Game {
 		// Divide players online to the teams enabled
 		int i = 0 ;
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (i > Team.getAllTeamsSize() - 1){
+			if (i > Team.getNumTeams() - 1){
 				i = 0;
 			}
-			String teamname = Team.getAllTeamsIndex(i);
-			Team.addPlayer(player, teamname);
-			Location spawn = LocationUtils.getTeamSpawn(teamname);
-			player.teleport(spawn);
-			Armor.setArmor(Team.getTeam(player), player);
+			
+			Team team = Team.getTeam(i);
+			team.addPlayer(player);
+			
+			try {
+				player.teleport(team.getSpawn());
+			} catch (Exception e) {
+				ChatUtils.broadcast("Unable to teleport player on team " + team.getName());
+				e.printStackTrace();
+			}
+			
+			Armor.setArmor(team.getColor(), player);
 			i++;
 		}
-	
 		
 		TimerStarter.start();
 		
@@ -74,7 +79,7 @@ public class Game {
 		return canStart;
 	}
 	
-	public static boolean gethasStarted(){
+	public static boolean hasStarted(){
 		return hasStarted;
 	}
 	

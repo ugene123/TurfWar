@@ -5,12 +5,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.handlers.Team;
 
 public class LocationUtils {
 	
 	public static Location lobbySpawn = stringToLocation(ConfigAccessor.getString("Locations.Lobby"));
 	
-	public static Location getTeamSpawn(String team){
+	public static Location getTeamSpawn(String team) {
 		
 		String StringLocation = ConfigAccessor.getString("Teams." + team.toUpperCase() + ".Location");
 		Location TeamSpawn = LocationUtils.stringToLocation(StringLocation);
@@ -28,9 +29,8 @@ public class LocationUtils {
 			teleportToLobby(p);
 	}
 	
-	public static void teleportToGame(Player player, String team) {
-		Location teamspawn = getTeamSpawn(team);
-		player.teleport(teamspawn);
+	public static void teleportToGame(Player player, Team team) {
+		player.teleport(team.getSpawn());
 	}
 	
 	public static Location stringToLocation(String string) {
@@ -48,16 +48,17 @@ public class LocationUtils {
         			Float.parseFloat(split[5]));
         	
 			return loc;
+			
 		} else if(split.length == 4){
+			
 			// Create a new loc by splitting up the args with ', '
-						Location loc = new Location(Bukkit.getWorld(split[0]), 
-			        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
-			        			Double.parseDouble(split[3]));
-						return loc;
-        }else{
-        
+			Location loc = new Location(Bukkit.getWorld(split[0]), 
+        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
+        			Double.parseDouble(split[3]));
+			return loc;
+			
+        } else {
         	return null;
-        
         }
     }
 	

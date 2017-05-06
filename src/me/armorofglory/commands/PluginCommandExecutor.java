@@ -55,7 +55,7 @@ public class PluginCommandExecutor implements CommandExecutor {
 				
 				if(args[0].equalsIgnoreCase("setteamspawn")) {
 					setTeamSpawn.onCommand(sender, cmd, label, args);
-					}
+				}
 				
 				else if(args[0].equalsIgnoreCase("addteam")) {
 					addTeam.onCommand(sender, cmd, label, args);
@@ -66,7 +66,6 @@ public class PluginCommandExecutor implements CommandExecutor {
 				else if(args[0].equalsIgnoreCase("delteam")) {
 					removeTeam.onCommand(sender, cmd, label, args);
 					return true;
-			
 				}
 				
 				else if(args[0].equalsIgnoreCase("setteamblock")) {

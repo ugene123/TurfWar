@@ -17,21 +17,19 @@ import me.armorofglory.utils.ChatUtils;
 
 public class BlockBreak implements Listener {
 	
-	
-	
-	
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		
-		if (Game.gethasStarted()) {
+		if (Game.hasStarted()) {
 			
 			Block block = event.getBlock();
 			
 			Player player = event.getPlayer();
-			String team = Team.getTeam(player);
+			Team team = Team.getPlayerTeam(player);
 			
 			// Get block broken in format as store in config
+			// TODO: use block.getType().name();
 			String BlockBroken = block.getTypeId() + ":" + block.getData();
 			
 			if (block.getType() == Material.GLASS) {
@@ -39,19 +37,18 @@ public class BlockBreak implements Listener {
 				event.setCancelled(true);
 			}
 			
-			
 			// If there are more team colors, add them here!
-			if (team.equals("RED")) {
+			if (team.getName().equals("RED")) {
 				
 				if (BlockBroken.equals(ConfigAccessor.getString("Teams.BLUE.TeamBlock"))) {
-					Points.add(team, 1);
+					team.addPoints(1);
 					ScoreboardManager.updateGameboard();
 				}
 				
-			} else if (team.equals("BLUE")){
+			} else if (team.getName().equals("BLUE")){
 				
 				if (BlockBroken.equals(ConfigAccessor.getString("Teams.RED.TeamBlock"))) {
-					Points.add(team, 1);
+					team.addPoints(1);
 					ScoreboardManager.updateGameboard();
 				}
 				

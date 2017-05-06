@@ -22,11 +22,11 @@ public class PlayerDeath implements Listener {
 		if(event.getEntityType() == EntityType.PLAYER) {
 			ChatUtils.msgPlayer(player, ChatColor.RED + "You were killed by " + player.getKiller().getName());
 			
-			String LootingTeam = Team.getTeam(player.getKiller());
+			Team lootingTeam = Team.getPlayerTeam(player.getKiller());
 			
-			int PointsPerKill = ConfigAccessor.getInt("Settings.Points.pointsPerKill");
-			Points.add(LootingTeam, PointsPerKill);
-			ChatUtils.msgPlayer(player.getKiller(), "You scored team " + LootingTeam + " " + PointsPerKill + " points!" );
+			int pointsPerKill = ConfigAccessor.getInt("Settings.Points.pointsPerKill");
+			lootingTeam.addPoints(pointsPerKill);
+			ChatUtils.msgPlayer(player.getKiller(), "You scored team " + lootingTeam.getName() + " " + pointsPerKill + " points!" );
 			
 		}
         

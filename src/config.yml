@@ -6,13 +6,13 @@
 
 # Main game settings
 Settings:
-  minPlayersToStart: 2
+  minPlayersToStart: 1
   startCountdownTimer: 10
   gameDuration: 30
   allTeams: []
   Points:
     pointsPerKill: 10
-    pointsPerBlock: 1 
+    pointsPerBlock: 1
     pointsPerDeposit: 3
   
 # Configure Plugin messages
@@ -23,7 +23,7 @@ Messages:
 
 # Lobby Spawn Point
 Locations:
-  Lobby: 
+  Lobby:
 
 # Game Teams
 Teams:

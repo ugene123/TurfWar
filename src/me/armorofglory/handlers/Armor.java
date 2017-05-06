@@ -8,21 +8,18 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class Armor {
 
-	public static void setArmor(String teamColor, Player player) {
+	public static void setArmor(Color color, Player player) {
 		
-		Color color = null;
-		
-		switch (teamColor) {
-			case "RED": color = Color.RED;
-				break;
-			case "BLUE": color = Color.BLUE;
-				break;
-			case "YELLOW": color = Color.YELLOW;
-				break;
-			case "GREEN": color = Color.GREEN;
-				break;	
-		}
-		
+//		switch (teamColor) {
+//			case "RED": color = Color.RED;
+//				break;
+//			case "BLUE": color = Color.BLUE;
+//				break;
+//			case "YELLOW": color = Color.YELLOW;
+//				break;
+//			case "GREEN": color = Color.GREEN;
+//				break;	
+//		}
 		
 		ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
 		LeatherArmorMeta helmetmeta = (LeatherArmorMeta) helmet.getItemMeta();
