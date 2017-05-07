@@ -9,7 +9,6 @@ import me.armorofglory.commands.PluginCommandExecutor;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Arena;
 import me.armorofglory.handlers.Game;
-import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.listeners.entity.EntityDamageByEntity;
 import me.armorofglory.listeners.player.BlockBreak;
@@ -62,7 +61,7 @@ public class Turfwar extends JavaPlugin {
 		
 		ScoreboardManager.updateLobbyboard();
 		
-		//Arena.save();
+		Arena.save();
 		
 	}
 	

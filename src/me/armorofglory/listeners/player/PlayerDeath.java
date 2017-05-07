@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import me.armorofglory.config.ConfigAccessor;
-import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.utils.ChatUtils;
 

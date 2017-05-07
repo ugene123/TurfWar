@@ -1,6 +1,7 @@
 package me.armorofglory.listeners.player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,9 +11,9 @@ import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
 import me.armorofglory.handlers.Team;
+import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownManager;
 import me.armorofglory.utils.ChatUtils;
-import me.armorofglory.utils.LocationUtils;
 
 public class PlayerQuit implements Listener{
 	
@@ -39,19 +40,19 @@ public class PlayerQuit implements Listener{
 		
 		if (GameState.isState(GameState.IN_GAME)) {
 			
-			if (!(Bukkit.getOnlinePlayers().size() - 1 >= Game.getMinPlayersToStart())) {
-				for (Player player : Bukkit.getOnlinePlayers()){
-					LocationUtils.teleportToLobby(player);
-					GameState.setState(GameState.LOBBY);
-					ChatUtils.msgPlayer(player, "There's not enough players online!");
-				}
+			// If players online falls under threshold, forcestop the game
+			if (Bukkit.getOnlinePlayers().size() - 1 < 2) {
+				Game.forcestop();
+				ChatUtils.broadcast(ChatColor.RED + "Game has been stopped!");
+				ScoreboardManager.updateLobbyboard();
 				
 			}
 			
 		}
 		
 		Player player = event.getPlayer();
-		
+
+		// Remove player from team when he leaves the server
 		if(GameState.isState(GameState.IN_GAME)) {
 			if(Team.hasPlayer(player)) {
 				Team.getPlayerTeam(player).removePlayer(player);

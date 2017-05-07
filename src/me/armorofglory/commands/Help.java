@@ -12,7 +12,6 @@ public class Help {
 		// Help menu for Plugin
 		sender.sendMessage(" ");
 		sender.sendMessage(ChatColor.GOLD + "--------------------< " + ChatColor.YELLOW + ChatColor.BOLD + "TURF WARS" + ChatColor.GOLD + " >--------------------");
-		sender.sendMessage(" ");
 		sender.sendMessage(ChatColor.YELLOW + " /tw setlobby " + ChatColor.GRAY + "- Set Lobby spawn point");
 		sender.sendMessage(ChatColor.YELLOW + " /tw addteam <team> " + ChatColor.GRAY + "- Add team");
 		sender.sendMessage(ChatColor.YELLOW + " /tw delteam <team> " + ChatColor.GRAY + "- Delete team");
@@ -20,8 +19,9 @@ public class Help {
 		sender.sendMessage(ChatColor.YELLOW + " /tw setteamblock <team> " + ChatColor.GRAY + "- Set team block");
 		sender.sendMessage(ChatColor.YELLOW + " /tw setcorner # " + ChatColor.GRAY + "- Set arena corner");
 		sender.sendMessage(ChatColor.YELLOW + " /tw savearena " + ChatColor.GRAY + "- Saves arena");
+		sender.sendMessage(ChatColor.YELLOW + " /tw forcestart " + ChatColor.GRAY + "- Force start");
+		sender.sendMessage(ChatColor.YELLOW + " /tw forcestop " + ChatColor.GRAY + "- Force stop");
 		sender.sendMessage(ChatColor.YELLOW + " /tw help " + ChatColor.GRAY + "- Help menu");
-		sender.sendMessage(" ");
 		sender.sendMessage(ChatColor.GOLD + "-----------------------------------------------------");;
 		
 		return false;

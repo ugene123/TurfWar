@@ -3,7 +3,6 @@ package me.armorofglory.handlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.armorofglory.GameState;
@@ -24,7 +23,7 @@ public class Game {
 		
 		// Change game state to in-game
 		GameState.setState(GameState.IN_GAME);
-		ChatUtils.broadcast(ChatColor.GOLD + " Game has started!" );
+		ChatUtils.broadcast(ChatColor.GOLD + "Game has started!" );
 		hasStarted = true; 
 		
 		
@@ -70,7 +69,26 @@ public class Game {
 		for(Player player : Bukkit.getOnlinePlayers())
 			Armor.strip(player);
 			
+	}
+	
+	public static void forcestop() {
+		// Change hasStarted and GameState back to Lobby
+		hasStarted = false;
+		setCanStart(true);
+		GameState.setState(GameState.LOBBY);
+		ScoreboardManager.setCounter("Paused");
+				
+		// Teleport players back to Lobby
+		LocationUtils.teleportAllToLobby();
 		
+		// Reset Arena
+		Arena.reset();
+				
+		for(Player player : Bukkit.getOnlinePlayers()){
+			Armor.strip(player);
+		}
+		
+				
 		// Restart Start Countdown
 		// CountdownManager.resetCounter();
 	}

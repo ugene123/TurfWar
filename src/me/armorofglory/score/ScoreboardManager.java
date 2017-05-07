@@ -3,7 +3,6 @@ package me.armorofglory.score;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 
 

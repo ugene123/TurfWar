@@ -10,7 +10,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;
-import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.utils.ChatUtils;

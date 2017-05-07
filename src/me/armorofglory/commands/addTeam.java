@@ -17,7 +17,7 @@ public class addTeam {
 			String teamName = args[1].toUpperCase();
 			
 			// if newTeam is NOT in allTeams and is not in Config
-			if(!Team.hasTeam(teamName) /*&& !ConfigAccessor.containsPath("Teams." + teamName)*/) {
+			if(!Team.hasTeam(teamName)) {
 				Team team = Team.create(teamName);
 				
 				if (team != null) {

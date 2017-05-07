@@ -42,6 +42,14 @@ public class PluginCommandExecutor implements CommandExecutor {
 				else if(args[0].equalsIgnoreCase("savearena")) {
 					saveArena.onCommand(sender, cmd, label, args);
 					return true;	
+				
+				} else if(args[0].equalsIgnoreCase("forcestop")) {
+					forceStop.onCommand(sender, cmd, label, args);
+					return true;	
+				
+				} else if(args[0].equalsIgnoreCase("forcestart")) {
+					forceStart.onCommand(sender, cmd, label, args);
+					return true;	
 				}
 				
 				else {

@@ -1,7 +1,7 @@
 package me.armorofglory.listeners.player;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.GameMode;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import me.armorofglory.config.ConfigAccessor;
-import me.armorofglory.handlers.Points;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.utils.ChatUtils;
 
@@ -22,18 +21,26 @@ public class SignClick implements Listener {
 	@EventHandler
 	public void onRightClick(PlayerInteractEvent event) {
 		
+		Player player = event.getPlayer();
+		
+		// Cancel player trying to break the sign
+		if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if(event.getClickedBlock().getState() instanceof Sign ) {
+				if(player.getGameMode().equals(GameMode.SURVIVAL)) {
+					event.setCancelled(true);
+				}
+				
+			}
+		}
+		
+		
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 		
 			if(event.getClickedBlock().getState() instanceof Sign ) {
 				
-				
-				Sign sign  = (Sign) event.getClickedBlock().getState();
-				
-				Player player = event.getPlayer();
+				Sign sign  = (Sign) event.getClickedBlock().getState();			
 			
-				String team = Team.getTeam(player);
-				
-		
+				Team team = Team.getPlayerTeam(player);
 				
 				if (sign.getLine(0).equalsIgnoreCase("[" + ChatColor.DARK_BLUE + ChatColor.BOLD + "BANK" + ChatColor.BLACK + "]")) {
 					
@@ -44,17 +51,18 @@ public class SignClick implements Listener {
 					
 					if (sign.getLine(2).equals(ChatColor.DARK_RED + "RED TEAM")) {
 					
-						if (team.equals("RED")) {
+						if (team.getName().equals("RED")) {
 							for (int i = 0 ; i < 36 ; i++) {
 								
 								if(items.getItem(i) != null) {
 									ItemStack item = items.getItem(i);
+									@SuppressWarnings("deprecation")
 									String BlockInInventory = item.getTypeId() + ":" + item.getData().getData();
 									String OppositeTeamBlock = ConfigAccessor.getString("Teams.BLUE.TeamBlock");
 							
 									if(BlockInInventory.equals(OppositeTeamBlock)) {
 										
-										Points.add(team, item.getAmount() * multiplier);
+										team.addPoints(item.getAmount() * multiplier);
 										TotalBlocks += item.getAmount();
 									
 										player.getInventory().getItem(i).setAmount(0);
@@ -81,18 +89,19 @@ public class SignClick implements Listener {
 				
 					} else if (sign.getLine(2).equals(ChatColor.DARK_BLUE + "BLUE TEAM")) {
 						
-						if (team.equals("BLUE")) {
+						if (team.getName().equals("BLUE")) {
 							
 							for (int i = 0 ; i < 36 ; i++) {
 								
 								if(items.getItem(i) != null) {
 									ItemStack item = items.getItem(i);
+									@SuppressWarnings("deprecation")
 									String BlockInInventory = item.getTypeId() + ":" + item.getData().getData();
 									String OppositeTeamBlock = ConfigAccessor.getString("Teams.RED.TeamBlock");
 							
 									if(BlockInInventory.equals(OppositeTeamBlock)) {
 										
-										Points.add(team, item.getAmount() * multiplier);
+										team.addPoints(item.getAmount() * multiplier);
 										TotalBlocks += item.getAmount();
 									
 										player.getInventory().getItem(i).setAmount(0);

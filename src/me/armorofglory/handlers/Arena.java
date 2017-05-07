@@ -61,41 +61,4 @@ public class Arena {
 			blockLocation.getBlock().setData(block.getData());
 		}
 	}
-	
-	
-	
-	
-	
-	
-//	private static Map<Location, SavedBlock> BlocksBroken = new HashMap<Location, SavedBlock>();
-//	private static Map<Location, SavedBlock> BlocksPlaced = new HashMap<Location, SavedBlock>();
-		
-	
-//	@SuppressWarnings("deprecation")
-//	public static void resetArena() {
-//		
-//		for (Entry<Location, SavedBlock> entry : BlocksBroken.entrySet()) {
-//			Location loc = entry.getKey();
-//		    SavedBlock sb = entry.getValue();
-//		    loc.getBlock().setType(sb.getMaterial());
-//		    loc.getBlock().setData(sb.getData());
-//	    }
-//		
-//		for (Entry<Location, SavedBlock> entry : BlocksPlaced.entrySet()) {
-//			Location loc = entry.getKey();
-//			SavedBlock sb = BlocksPlaced.get(loc);
-//		    loc.getBlock().setType(sb.getMaterial());
-//		    loc.getBlock().setData(sb.getData());
-//	    }
-//		
-//	}
-//	
-//	public static void addBlockDestroyed(Location location, SavedBlock savedblock) {
-//		BlocksBroken.put(location, savedblock);
-//	}
-//	
-//	public static void addBlockPlaced(Location location, SavedBlock savedblock) {
-//		BlocksPlaced.put(location, savedblock);
-//	}
-
 }
