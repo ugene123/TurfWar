@@ -26,6 +26,7 @@ public class Game {
 		ChatUtils.broadcast(ChatColor.GOLD + "Game has started!" );
 		hasStarted = true; 
 		
+		Bukkit.getWorld("world").setTime(0);
 		
 		// Divide players online to the teams enabled
 		int i = 0 ;
@@ -74,7 +75,7 @@ public class Game {
 	public static void forcestop() {
 		// Change hasStarted and GameState back to Lobby
 		hasStarted = false;
-		setCanStart(true);
+		setCanStart(false);
 		GameState.setState(GameState.LOBBY);
 		ScoreboardManager.setCounter("Paused");
 				

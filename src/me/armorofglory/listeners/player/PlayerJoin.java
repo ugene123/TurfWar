@@ -1,6 +1,7 @@
 package me.armorofglory.listeners.player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +42,9 @@ public class PlayerJoin implements Listener {
 			// Teleport player to the lobby location
 			LocationUtils.teleportToLobby(player);
 			
-			}
+		} else {
+				ChatUtils.broadcast(ChatColor.RED + "Error: There's no lobby spawn defined!");
+		}
 
 		ScoreboardManager.updateLobbyboard();
 	}
