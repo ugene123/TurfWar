@@ -14,29 +14,30 @@ import org.bukkit.inventory.PlayerInventory;
 
 import me.armorofglory.GameState;
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.handlers.GUI;
 import me.armorofglory.handlers.Team;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.utils.ChatUtils;
 
-public class SignClick implements Listener {
+public class PlayerInteract implements Listener {
 	
 	
 	@EventHandler
-	public void onRightClick(PlayerInteractEvent event) {
+	public void onP(PlayerInteractEvent event) {
 		
 		Player player = event.getPlayer();
 		
 		if(GameState.getState().equals(GameState.IN_GAME)) {
 			
-			// Cancel player trying to break the sign
-			if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
-				if(event.getClickedBlock().getState() instanceof Sign ) {
-					if(player.getGameMode().equals(GameMode.SURVIVAL)) {
-						event.setCancelled(true);
+				// Cancel player trying to break the sign
+				if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
+					if(event.getClickedBlock().getState() instanceof Sign ) {
+						if(player.getGameMode().equals(GameMode.SURVIVAL)) {
+							event.setCancelled(true);
+						}
+						
 					}
-					
 				}
-			}
 			
 			
 			if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -140,7 +141,30 @@ public class SignClick implements Listener {
 			
 		} else {
 			
-			ChatUtils.msgPlayer(player, ChatColor.RED + "You can only use the bank in-game!");
+			if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+				
+				if(event.getClickedBlock().getState() instanceof Sign ) {
+						ChatUtils.msgPlayer(player, ChatColor.RED + "You can only use the bank in-game!");
+				}
+			}
+		} 
+		
+		if(GameState.getState().equals(GameState.LOBBY) || GameState.getState().equals(GameState.POST_GAME)) {
+			
+			ItemStack item = event.getItem();
+			
+			if(event.getAction() == Action.PHYSICAL || item == null || item.getType().equals(Material.AIR)) {
+				return;
+			}
+			
+			if(item.getType() == Material.EMERALD){
+				GUI.openShop(player);
+			}
+			
+			if(item.getType() == Material.NETHER_STAR) {
+				GUI.openVoteMenu(player);
+			}
+			
 		}
 	}
 	

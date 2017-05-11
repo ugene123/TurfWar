@@ -45,6 +45,7 @@ public class Game {
 				e.printStackTrace();
 			}
 			
+			player.getInventory().clear();
 			Armor.setArmor(team.getColor(), player);
 			i++;
 		}
@@ -67,8 +68,10 @@ public class Game {
 		// Reset Arena
 		Arena.reset();
 		
-		for(Player player : Bukkit.getOnlinePlayers())
+		for(Player player : Bukkit.getOnlinePlayers()){
 			Armor.strip(player);
+			GUI.giveDefaultItems(player);
+		}	
 			
 	}
 	
@@ -87,6 +90,7 @@ public class Game {
 				
 		for(Player player : Bukkit.getOnlinePlayers()){
 			Armor.strip(player);
+			GUI.giveDefaultItems(player);
 		}
 		
 				

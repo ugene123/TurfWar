@@ -59,5 +59,8 @@ public class PlayerQuit implements Listener{
 			}
 		}
 		
+		event.setQuitMessage(null);
+
+		
 	}
 }
