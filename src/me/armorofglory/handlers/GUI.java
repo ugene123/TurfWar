@@ -19,15 +19,15 @@ public class GUI {
 		shopMeta.setDisplayName(ChatColor.GREEN + "Shop " + ChatColor.GRAY + "(Right Click)");
 		shop.setItemMeta(shopMeta);
 		
-		ItemStack vote = new ItemStack(Material.NETHER_STAR);
-		ItemMeta voteMeta = vote.getItemMeta();
-		voteMeta.setDisplayName(ChatColor.GREEN + "Map Selector " + ChatColor.GRAY + "(Right Click)");
-		vote.setItemMeta(voteMeta);
+//		ItemStack vote = new ItemStack(Material.NETHER_STAR);
+//		ItemMeta voteMeta = vote.getItemMeta();
+//		voteMeta.setDisplayName(ChatColor.GREEN + "Map Selector " + ChatColor.GRAY + "(Right Click)");
+//		vote.setItemMeta(voteMeta);
 		
 		Inventory inv = player.getInventory();
 		inv.clear();
 		inv.setItem(3, shop);
-		inv.setItem(5, vote);
+//		inv.setItem(5, vote);
 	}
 
 	public static void openShop(Player player) {
