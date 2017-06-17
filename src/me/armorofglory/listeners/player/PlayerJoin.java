@@ -52,7 +52,6 @@ public class PlayerJoin implements Listener {
 		// Do this when player first joins server
 		player.setHealth(20);
 		player.setFoodLevel(20);
-				
 		GUI.giveDefaultItems(player);
 		
 		ScoreboardManager.updateLobbyboard();
@@ -62,7 +61,7 @@ public class PlayerJoin implements Listener {
 			" has joined (" + ChatColor.YELLOW + Bukkit.getOnlinePlayers().size() + ChatColor.GOLD + 
 			"/" + ChatColor.YELLOW + "10" + ChatColor.GOLD + ")");
 				
-
+		
 	}
 	
 		

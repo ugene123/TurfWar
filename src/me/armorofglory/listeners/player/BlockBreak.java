@@ -1,5 +1,6 @@
 package me.armorofglory.listeners.player;
 
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+
 
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.Game;

@@ -1,6 +1,9 @@
 package me.armorofglory;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,8 +27,12 @@ import me.armorofglory.listeners.player.PlayerInteract;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
 import me.armorofglory.threads.TimerStarter;
+import me.armorofglory.mysql.MySQL;
 
 public class Turfwar extends JavaPlugin {
+	
+	MySQL MySQL = new MySQL("namysql.ggservers.com", "3306", "p82_2591", "p82_2591", "9ff46baad9");
+	Connection connection = null;
 	
 	private static Plugin plugin; 
 	
@@ -64,7 +71,18 @@ public class Turfwar extends JavaPlugin {
 		
 		Arena.save();
 		
-	}
+		// Connect to Database
+		try {
+			connection = MySQL.openConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	} 
 	
 	public void onDisable() {
 		Team.backupAllTeams();

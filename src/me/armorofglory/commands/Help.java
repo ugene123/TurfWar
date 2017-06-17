@@ -17,7 +17,8 @@ public class Help {
 		sender.sendMessage(ChatColor.YELLOW + " /tw delteam <team> " + ChatColor.GRAY + "- Delete team");
 		sender.sendMessage(ChatColor.YELLOW + " /tw setteamspawn <team> " + ChatColor.GRAY + "- Set team spawn");
 		sender.sendMessage(ChatColor.YELLOW + " /tw setteamblock <team> " + ChatColor.GRAY + "- Set team block");
-		sender.sendMessage(ChatColor.YELLOW + " /tw setcorner # " + ChatColor.GRAY + "- Set arena corner");
+		sender.sendMessage(ChatColor.YELLOW + " /tw setkit <kitname> " + ChatColor.GRAY + "- Set kit");
+		sender.sendMessage(ChatColor.YELLOW + " /tw setcorner <#> " + ChatColor.GRAY + "- Set arena corner");
 		sender.sendMessage(ChatColor.YELLOW + " /tw savearena " + ChatColor.GRAY + "- Saves arena");
 		sender.sendMessage(ChatColor.YELLOW + " /tw forcestart " + ChatColor.GRAY + "- Force start");
 		sender.sendMessage(ChatColor.YELLOW + " /tw forcestop " + ChatColor.GRAY + "- Force stop");

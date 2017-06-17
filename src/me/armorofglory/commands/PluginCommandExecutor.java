@@ -28,18 +28,12 @@ public class PluginCommandExecutor implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("help")) {
 					Help.onCommand(sender, cmd, label, args);
 					return true;
-				} 
-				
-				else if(args[0].equalsIgnoreCase("setlobby")) {
+					
+				} else if(args[0].equalsIgnoreCase("setlobby")) {
 					setLobby.onCommand(sender, cmd, label, args);
-					return true;		
-				} 
-				
-				else if(args[0].equalsIgnoreCase("setteamspawn")) {
-					ChatUtils.msgSender(sender, "Use /tw setteamspawn <team>");
-				}
-				
-				else if(args[0].equalsIgnoreCase("savearena")) {
+					return true;	
+					
+				} else if(args[0].equalsIgnoreCase("savearena")) {
 					saveArena.onCommand(sender, cmd, label, args);
 					return true;	
 				
@@ -51,6 +45,44 @@ public class PluginCommandExecutor implements CommandExecutor {
 					forceStart.onCommand(sender, cmd, label, args);
 					return true;	
 				
+				
+				
+				// not enough arguements
+				
+				} else if(args[0].equalsIgnoreCase("setteamspawn")) {
+					ChatUtils.msgSender(sender, "You must specify the team!" + ChatColor.YELLOW +  " /tw setteamspawn <team>");
+					return true;
+					
+				} else if(args[0].equalsIgnoreCase("addteam")) {
+					ChatUtils.msgSender(sender, "You must specify the team!" + ChatColor.YELLOW +  " /tw addteam <team>");
+					return true;
+				
+				} else if(args[0].equalsIgnoreCase("delteam")) {
+					ChatUtils.msgSender(sender, "You must specify the team!" + ChatColor.YELLOW +  "  /tw delteam <team>");
+					return true;
+				
+				} else if(args[0].equalsIgnoreCase("setteamblock")) {
+					ChatUtils.msgSender(sender, "You must specify the team!" + ChatColor.YELLOW +  " /tw setteamblock <team>");
+					return true;
+				
+				} else if(args[0].equalsIgnoreCase("setteamspawn")) {
+					ChatUtils.msgSender(sender, "You must specify the team!" + ChatColor.YELLOW +  " /tw setteamspawn <team>");
+					return true;
+				
+				} else if(args[0].equalsIgnoreCase("setcorner")) {
+					ChatUtils.msgSender(sender, "You must specify which corner!" + ChatColor.YELLOW +  " /tw setcorner <#>");
+					return true;
+				}
+				
+				else if(args[0].equalsIgnoreCase("setkit")) {
+					ChatUtils.msgSender(sender, "You must specify a kit name!" + ChatColor.YELLOW +  " /tw setkit <kitname>");
+					return true;
+				
+				}
+				else if(args[0].equalsIgnoreCase("getkit")) {
+					ChatUtils.msgSender(sender, "You must specify a kit name!" + ChatColor.YELLOW +  " /tw getkit <kitname>");
+					return true;
+					
 				}
 				
 				else {
@@ -85,6 +117,17 @@ public class PluginCommandExecutor implements CommandExecutor {
 				else if(args[0].equalsIgnoreCase("setcorner")) {
 					setCorner.onCommand(sender, cmd, label, args);
 					return true;
+				}
+				
+				else if(args[0].equalsIgnoreCase("setkit")) {
+					setKit.onCommand(sender, cmd, label, args);
+					return true;
+				
+				}
+				else if(args[0].equalsIgnoreCase("getkit")) {
+					getKit.onCommand(sender, cmd, label, args);
+					return true;
+				
 				}
 				
 			}

@@ -1,6 +1,7 @@
 package me.armorofglory.config;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
@@ -35,6 +36,16 @@ public class ConfigAccessor {
 	public static void storeList(String path, List<String> list) {
 		plugin.getConfig().set(path, list);
 		plugin.saveConfig();
+	}
+	
+	public static void storeMap(String path, Map map) {
+		plugin.getConfig().set(path, map);
+		plugin.saveConfig();
+	}
+	
+	public static List<Map<?, ?>> getMap(String path) {
+		plugin.getConfig().get(path);
+		return plugin.getConfig().getMapList(path);
 	}
 	
 	public static List<String> getList(String path) {
@@ -84,7 +95,8 @@ public class ConfigAccessor {
 	
 	public static void loadConfiguration(){
 		plugin.saveDefaultConfig();
-	}     
+	}   
+	
 	public static void reloadConfiguration() {
 		plugin.reloadConfig();
 	}
@@ -93,10 +105,14 @@ public class ConfigAccessor {
 		plugin.getConfig().set(path, object);
 		plugin.saveConfig();
 	}
+	
 	public static Object getObject(String path) {
 		plugin.reloadConfig();
 		return plugin.getConfig().get(path);
 	}
-
+	
+	public static boolean contains(String path) {
+		return plugin.getConfig().contains(path);
+	}
 
 }
