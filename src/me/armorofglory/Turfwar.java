@@ -1,9 +1,20 @@
 package me.armorofglory;
 
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.SQLException;
 
+=======
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+>>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +34,10 @@ import me.armorofglory.listeners.player.PlayerJoin;
 import me.armorofglory.listeners.player.PlayerQuit;
 import me.armorofglory.listeners.player.PlayerRespawn;
 import me.armorofglory.listeners.player.SignChange;
+import me.armorofglory.menu.Button;
+import me.armorofglory.menu.Menu;
+import me.armorofglory.menu.VoteAction;
+import me.armorofglory.menu.VoteMenu;
 import me.armorofglory.listeners.player.PlayerInteract;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
@@ -71,6 +86,7 @@ public class Turfwar extends JavaPlugin {
 		
 		Arena.save();
 		
+<<<<<<< HEAD
 		// Connect to Database
 		try {
 			connection = MySQL.openConnection();
@@ -83,13 +99,16 @@ public class Turfwar extends JavaPlugin {
 		}
 		
 	} 
+=======
+		createMenu();
+	}
+>>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
 	
 	public void onDisable() {
 		Team.backupAllTeams();
 		Arena.reset();
 		plugin = null;
 	}
-	
 	
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
@@ -104,8 +123,45 @@ public class Turfwar extends JavaPlugin {
 	    pm.registerEvents(new PlayerInteract(), this);
 	    pm.registerEvents(new SignChange(), this);
 	    pm.registerEvents(new InventoryClick(), this);
+	    
+		pm.registerEvents(Menu.listener, plugin);
+		pm.registerEvents(Button.listener, plugin);
 	}
 	
+	private ItemStack mapVoteButton;
+	private VoteMenu mapVote;
+	
+	private void createMenu() {
+		// create the voting menu
+		mapVote = new VoteMenu("Vote", 3);
+		mapVote.addOption(1, 1, Material.MAP, "Map 1");
+		mapVote.addOption(1, 3, Material.MAP, "Map 2");
+		mapVote.addOption(1, 5, Material.MAP, "Map 3");
+		mapVote.addOption(1, 7, Material.MAP, "Map 4");
+		mapVoteButton = mapVote.createButton(Material.NETHER_STAR,
+				ChatColor.GREEN + "Map Selector " + ChatColor.GRAY + ChatColor.ITALIC + "(Right click)");
+		
+		// start the vote
+		mapVote.start(30, new VoteAction() {
+			@Override
+			public void onComplete(String winner) {
+				Bukkit.broadcastMessage(winner + " is the winner!");
+			}
+		});
+		
+		// give all online players the menu item
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			p.getInventory().setItem(5, mapVoteButton);
+		}
+		
+		// newly joined players will receive the menu item
+		getServer().getPluginManager().registerEvents(new Listener() {
+			@EventHandler
+			public void onPlayerJoin(PlayerJoinEvent event) {
+				event.getPlayer().getInventory().setItem(5, mapVoteButton);
+			}
+		}, this);
+	}
 	
 	public void registerCommands() {
 		this.getCommand("turfwar").setExecutor(new PluginCommandExecutor(this));

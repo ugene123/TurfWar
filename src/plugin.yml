@@ -6,3 +6,9 @@ commands:
   turfwar:
     description: Base command for Turf Wars Plugin
     aliases: [tw]
+  regions:
+    description: Region resetting command
+    aliases: [reg]
+  vote:
+    description: Voting commands
+    aliases: [v]
