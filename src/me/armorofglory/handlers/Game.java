@@ -1,12 +1,16 @@
 package me.armorofglory.handlers;
 
 
+import java.sql.ResultSet;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import me.armorofglory.GameState;
+import me.armorofglory.Turfwar;
 import me.armorofglory.config.ConfigAccessor;
+import me.armorofglory.mysql.MySQL;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.TimerStarter;
 import me.armorofglory.utils.ChatUtils;
@@ -14,12 +18,14 @@ import me.armorofglory.utils.LocationUtils;
 
 public class Game {
 	
+	private static MySQL mysql = Turfwar.mysql;
+	
 	private static int minPlayersToStart = ConfigAccessor.getInt("Settings.minPlayersToStart");
 	private static boolean canStart = false;
 	private static boolean hasStarted = false;
 	
+	
 	public static void start() {
-		
 		
 		// Change game state to in-game
 		GameState.setState(GameState.IN_GAME);
@@ -30,24 +36,34 @@ public class Game {
 		
 		// Divide players online to the teams enabled
 		int i = 0 ;
+		
 		for (Player player : Bukkit.getOnlinePlayers()) {
+			
 			if (i > Team.getNumTeams() - 1){
 				i = 0;
 			}
-			
-			Team team = Team.getTeam(i);
-			team.addPlayer(player);
-			
+	
 			try {
-				player.teleport(team.getSpawn());
-			} catch (Exception e) {
-				ChatUtils.broadcast("Unable to teleport player on team " + team.getName());
-				e.printStackTrace();
-			}
 			
-			player.getInventory().clear();
-			Armor.setArmor(team.getColor(), player);
-			i++;
+				Team team = Team.getTeam(i);
+				team.addPlayer(player);
+				
+				try {
+					player.teleport(team.getSpawn());
+					player.getInventory().clear();
+					Armor.setArmor(team.getColor(), player);
+					i++;
+					
+				} catch (Exception e) {
+					Bukkit.getLogger().info("[TurfWar] " + player.getDisplayName() + 
+							" could not be teleported to " + team.getName() + 
+							" spawn because the team spawn has not been set!");
+				}
+
+			} catch (Exception e) {
+				Bukkit.getLogger().info("[TurfWar] No teams are defined!");
+			
+			}
 		}
 		
 		TimerStarter.start();
@@ -71,6 +87,17 @@ public class Game {
 		for(Player player : Bukkit.getOnlinePlayers()){
 			Armor.strip(player);
 			GUI.giveDefaultItems(player);
+			
+			try {
+				ResultSet result = mysql.querySQL("SELECT games_played FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+				result.next();
+				int games_played = result.getInt("games_played") + 1;
+				mysql.updateSQL("UPDATE turfwar SET games_played = " + games_played + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+			
 		}	
 			
 	}

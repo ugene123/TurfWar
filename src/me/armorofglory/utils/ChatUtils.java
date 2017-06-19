@@ -30,4 +30,5 @@ public class ChatUtils {
 	public static String convertToColor(String string) {
 		return ChatColor.translateAlternateColorCodes('&', string);
 	}
+	
 }

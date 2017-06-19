@@ -21,7 +21,11 @@ public class LocationUtils {
 	
 	
 	public static void teleportToLobby(Player player) {
-		player.teleport(lobbySpawn);
+		try {
+			player.teleport(lobbySpawn);
+		} catch (Exception e) {
+			Bukkit.getLogger().info("[TurfWar] WARNING: " + player.getDisplayName() + " was not teleported to lobby because the lobby spawn point has not been set!" );
+		}
 	}
 	
 	public static void teleportAllToLobby() {
@@ -36,30 +40,37 @@ public class LocationUtils {
 	public static Location stringToLocation(String string) {
         
 		// Converts the string in config to a useable bukkit location
-		String[] split = string.split(", ");
-        
-		// Location must include 6 args: world, x, y, z, yaw, pitch
-		if(split.length == 6){
-        	
-			// Create a new loc by splitting up the args with ', '
-			Location loc = new Location(Bukkit.getWorld(split[0]), 
-        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
-        			Double.parseDouble(split[3]), Float.parseFloat(split[4]), 
-        			Float.parseFloat(split[5]));
-        	
-			return loc;
-			
-		} else if(split.length == 4){
-			
-			// Create a new loc by splitting up the args with ', '
-			Location loc = new Location(Bukkit.getWorld(split[0]), 
-        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
-        			Double.parseDouble(split[3]));
-			return loc;
-			
-        } else {
-        	return null;
-        }
-    }
-	
+		try {
+				
+			String[] split = string.split(", ");
+		
+			// Location must include 6 args: world, x, y, z, yaw, pitch
+			if(split.length == 6){
+	        	
+				// Create a new loc by splitting up the args with ', '
+				Location loc = new Location(Bukkit.getWorld(split[0]), 
+	        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
+	        			Double.parseDouble(split[3]), Float.parseFloat(split[4]), 
+	        			Float.parseFloat(split[5]));
+	        	
+				return loc;
+				
+			} else if(split.length == 4){
+				
+				// Create a new loc by splitting up the args with ', '
+				Location loc = new Location(Bukkit.getWorld(split[0]), 
+	        			Double.parseDouble(split[1]), Double.parseDouble(split[2]), 
+	        			Double.parseDouble(split[3]));
+				return loc;
+		
+			} else {
+				
+				return null;
+			}
+				
+		} catch (Exception e) {
+
+			return null;
+		}
+	}
 }

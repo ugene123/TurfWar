@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import me.armorofglory.Turfwar;
 
 
 public class ConfigAccessor {
 	
-	private static Plugin plugin = Turfwar.getPlugin();
+	public static Plugin plugin;
 	
 	public static void storeInt(String path, int Int) {
 		plugin.getConfig().set(path, Int);
@@ -64,7 +64,8 @@ public class ConfigAccessor {
 	}
 	
 	public static String getString(String path) {
-		String string = plugin.getConfig().getString(path);
+		FileConfiguration config = plugin.getConfig();
+		String string = config.getString(path);
 		return string;
 	}
 	

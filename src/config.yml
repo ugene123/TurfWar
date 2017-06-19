@@ -6,9 +6,9 @@
 
 # Main game settings
 Settings:
-  minPlayersToStart: 1
-  startCountdownTimer: 10
-  gameDuration: 30
+  minPlayersToStart: 2
+  startCountdownTimer: 20
+  gameDuration: 60
   allTeams: []
   Points:
     pointsPerKill: 10
@@ -19,7 +19,7 @@ Settings:
 Messages:
   PREFIX: "&6[&eTurfWar&6] &f"
   Errors:
-    notEnoughPlayersOnline: "Messages.Errors.notEnoughPlayersOnline"
+    notEnoughPlayersOnline: "There's not enough players online to start the game!"
 
 # Lobby Spawn Point
 Locations:
@@ -27,3 +27,11 @@ Locations:
 
 # Game Teams
 Teams:
+
+# mySQL Database
+mySQL:
+  host: 'localhost'
+  port: '3306'
+  database: 'minecraft'
+  user: 'root'
+  pass: '6154984'

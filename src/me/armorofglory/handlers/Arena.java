@@ -3,6 +3,8 @@ package me.armorofglory.handlers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,36 +21,42 @@ public class Arena {
 	
 	
 	public static Map<Location, SavedBlock> save() {
- 
-        int topBlockX = (loc1.getBlockX() < loc2.getBlockX() ? loc2.getBlockX() : loc1.getBlockX());
-        int bottomBlockX = (loc1.getBlockX() > loc2.getBlockX() ? loc2.getBlockX() : loc1.getBlockX());
- 
-        int topBlockY = (loc1.getBlockY() < loc2.getBlockY() ? loc2.getBlockY() : loc1.getBlockY());
-        int bottomBlockY = (loc1.getBlockY() > loc2.getBlockY() ? loc2.getBlockY() : loc1.getBlockY());
- 
-        int topBlockZ = (loc1.getBlockZ() < loc2.getBlockZ() ? loc2.getBlockZ() : loc1.getBlockZ());
-        int bottomBlockZ = (loc1.getBlockZ() > loc2.getBlockZ() ? loc2.getBlockZ() : loc1.getBlockZ());
- 
-        for(int x = bottomBlockX; x <= topBlockX; x++)
-        {
-            for(int z = bottomBlockZ; z <= topBlockZ; z++)
-            {
-                for(int y = bottomBlockY; y <= topBlockY; y++)
-                {
-                    Block arenablock = loc1.getWorld().getBlockAt(x, y, z);
-                   
-                    Location blockLocation = new Location(loc1.getWorld(), x, y, z);
-                    
-                    Material BlockType = arenablock.getType();
-                    @SuppressWarnings("deprecation")
-					byte BlockData = arenablock.getData();
-                    
-                    ArenaBlocks.put(blockLocation, new SavedBlock(BlockType, BlockData));
-                }
-            }
-        }
-       
-        return ArenaBlocks;
+		
+		if(loc1 != null && loc2 != null){
+			
+			int topBlockX = (loc1.getBlockX() < loc2.getBlockX() ? loc2.getBlockX() : loc1.getBlockX());
+	        int bottomBlockX = (loc1.getBlockX() > loc2.getBlockX() ? loc2.getBlockX() : loc1.getBlockX());
+	 
+	        int topBlockY = (loc1.getBlockY() < loc2.getBlockY() ? loc2.getBlockY() : loc1.getBlockY());
+	        int bottomBlockY = (loc1.getBlockY() > loc2.getBlockY() ? loc2.getBlockY() : loc1.getBlockY());
+	 
+	        int topBlockZ = (loc1.getBlockZ() < loc2.getBlockZ() ? loc2.getBlockZ() : loc1.getBlockZ());
+	        int bottomBlockZ = (loc1.getBlockZ() > loc2.getBlockZ() ? loc2.getBlockZ() : loc1.getBlockZ());
+	 
+	        for(int x = bottomBlockX; x <= topBlockX; x++)
+	        {
+	            for(int z = bottomBlockZ; z <= topBlockZ; z++)
+	            {
+	                for(int y = bottomBlockY; y <= topBlockY; y++)
+	                {
+	                    Block arenablock = loc1.getWorld().getBlockAt(x, y, z);
+	                   
+	                    Location blockLocation = new Location(loc1.getWorld(), x, y, z);
+	                    
+	                    Material BlockType = arenablock.getType();
+	                    @SuppressWarnings("deprecation")
+						byte BlockData = arenablock.getData();
+	                    
+	                    ArenaBlocks.put(blockLocation, new SavedBlock(BlockType, BlockData));
+	                }
+	            }
+	        }
+	       
+	        Bukkit.getLogger().info("[TurfWar] Arena has been saved!");
+		}
+	
+		return ArenaBlocks;
+		
     }
 	
 	@SuppressWarnings("deprecation")
@@ -60,5 +68,7 @@ public class Arena {
 			blockLocation.getBlock().setType(block.getMaterial());
 			blockLocation.getBlock().setData(block.getData());
 		}
+		
+		Bukkit.getLogger().info("[TurfWar] Arena has been reset!");
 	}
 }

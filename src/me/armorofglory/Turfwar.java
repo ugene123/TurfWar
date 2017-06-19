@@ -1,11 +1,8 @@
 package me.armorofglory;
 
-
-<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.SQLException;
 
-=======
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
->>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,24 +38,83 @@ import me.armorofglory.listeners.player.PlayerInteract;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.threads.CountdownStarter;
 import me.armorofglory.threads.TimerStarter;
+import me.armorofglory.utils.ChatUtils;
 import me.armorofglory.mysql.MySQL;
+import me.armorofglory.regionbackup.RegionCommand;
 
 public class Turfwar extends JavaPlugin {
 	
-	MySQL MySQL = new MySQL("namysql.ggservers.com", "3306", "p82_2591", "p82_2591", "9ff46baad9");
-	Connection connection = null;
 	
 	private static Plugin plugin; 
 	
 	public static Plugin getPlugin() {
 		return plugin;
-		
 	}
-	
-	
+
+	public static MySQL mysql;
 	
 	public void onEnable() {
+		
 		plugin = this;
+		ConfigAccessor.plugin = this;
+		
+		// Set up new mySQL configuration from config details
+		mysql = new MySQL(ConfigAccessor.getString("mySQL.host"), ConfigAccessor.getString("mySQL.port"), 
+				ConfigAccessor.getString("mySQL.database"), ConfigAccessor.getString("mySQL.user"), ConfigAccessor.getString("mySQL.pass"));
+		
+		Connection connection = null;
+		
+		
+		// Connect to Database
+		try {
+			connection = mysql.openConnection();
+			Bukkit.getLogger().info("[TurfWar] Successfully hooked to the mySQL database!");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			Bukkit.getLogger().info("[TurfWar] ERROR: the mySQL database could not be reached! Are the credentials valid?");
+		} 
+		
+		
+		// if turfwar table does not exist, create new turfwar table
+		try {
+			// check if anything is inside of table 'turfwar'
+			mysql.querySQL("SELECT uuid FROM turfwar");
+	
+		} catch (Exception e) {
+			
+			try {
+				// create new table 'turfwar' 
+				mysql.updateSQL("CREATE TABLE turfwar (uuid CHAR(36), displayname VARCHAR(16), "
+						+ "wins INT, defeats INT, points INT, kills INT, deaths INT, turf_broken INT, "
+						+ "turf_placed INT, turf_deposited INT, last_played DATE, games_played INT, "
+						+ "PRIMARY KEY (`uuid`))");
+
+				Bukkit.getLogger().info("[TurfWar] A turfwars mySQL table has been created!");
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		// if global_users tables does not exist
+		try {
+			// check if anything is inside of table 'turfwar'
+			mysql.querySQL("SELECT uuid FROM global_users");
+	
+		} catch (Exception e) {
+			
+			try {
+				// create new table 'turfwar' 
+				mysql.updateSQL("CREATE TABLE global_users (uuid CHAR(36), displayname VARCHAR(16), "
+						+ "wins INT, defeats INT, points INT, kills INT, deaths INT, turf_broken INT, "
+						+ "turf_placed INT, turf_deposited INT, last_played DATE, games_played INT, "
+						+ "PRIMARY KEY (`uuid`))");
+
+				Bukkit.getLogger().info("[TurfWar] A global_users mySQL table has been created!");
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+			
+			
 		
 		// register Events & Commands 
 		registerEvents();
@@ -86,23 +141,10 @@ public class Turfwar extends JavaPlugin {
 		
 		Arena.save();
 		
-<<<<<<< HEAD
-		// Connect to Database
-		try {
-			connection = MySQL.openConnection();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	} 
-=======
 		createMenu();
+		
 	}
->>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
+	
 	
 	public void onDisable() {
 		Team.backupAllTeams();
@@ -110,6 +152,9 @@ public class Turfwar extends JavaPlugin {
 		plugin = null;
 	}
 	
+	public void startMySQL(){
+		
+	}
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
 	    pm.registerEvents(new PlayerJoin(), this);
@@ -165,6 +210,7 @@ public class Turfwar extends JavaPlugin {
 	
 	public void registerCommands() {
 		this.getCommand("turfwar").setExecutor(new PluginCommandExecutor(this));
+		this.getCommand("reg").setExecutor(new RegionCommand());
 	}
 
 	
