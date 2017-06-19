@@ -141,10 +141,27 @@ public class Turfwar extends JavaPlugin {
 		
 		Arena.save();
 		
+<<<<<<< HEAD
+=======
+		// Connect to Database
+		try {
+			connection = MySQL.openConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+>>>>>>> 53dcc83f603e94f588ea7cc146ee6ea357c5679f
 		createMenu();
 		
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 53dcc83f603e94f588ea7cc146ee6ea357c5679f
 	
 	public void onDisable() {
 		Team.backupAllTeams();
