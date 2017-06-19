@@ -1,11 +1,8 @@
 package me.armorofglory;
 
-
-<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.SQLException;
 
-=======
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
->>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -86,7 +82,6 @@ public class Turfwar extends JavaPlugin {
 		
 		Arena.save();
 		
-<<<<<<< HEAD
 		// Connect to Database
 		try {
 			connection = MySQL.openConnection();
@@ -98,11 +93,8 @@ public class Turfwar extends JavaPlugin {
 			e.printStackTrace();
 		}
 		
-	} 
-=======
 		createMenu();
 	}
->>>>>>> fb2d7f5f87930c0c83f67dbfd211553ee9c8b01d
 	
 	public void onDisable() {
 		Team.backupAllTeams();
