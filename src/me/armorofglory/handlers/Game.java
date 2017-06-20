@@ -88,6 +88,29 @@ public class Game {
 			Armor.strip(player);
 			GUI.giveDefaultItems(player);
 			
+			if(Team.getPlayerTeam(player) == Team.getWinner()) {
+				
+				try {
+					ResultSet result = mysql.querySQL("SELECT wins FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+					result.next();
+					int wins = result.getInt("wins") + 1;
+					mysql.updateSQL("UPDATE turfwar SET wins = " + wins + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			} else {
+				
+				try {
+					ResultSet result = mysql.querySQL("SELECT defeats FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+					result.next();
+					int defeats = result.getInt("defeats") + 1;
+					mysql.updateSQL("UPDATE turfwar SET defeats = " + defeats + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 			try {
 				ResultSet result = mysql.querySQL("SELECT games_played FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
 				result.next();

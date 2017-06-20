@@ -61,10 +61,11 @@ public class PlayerJoin implements Listener {
 		GUI.giveDefaultItems(player);
 		Date date = new java.sql.Date(System.currentTimeMillis());
 		
+		// add player to turfwar table
 		try {
 			// if player is not in table
 			if (!mysql.querySQL("SELECT uuid FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'").next()){
-				// create new row for table with default inputs	
+				// add player to table
 				mysql.updateSQL("INSERT INTO turfwar (uuid,displayname,wins,defeats,points,kills,deaths,turf_broken,turf_placed,turf_deposited,last_played,games_played) VALUES "
 						+ "('"+ player.getUniqueId() +"','" + player.getDisplayName() +"','0','0','0','0','0','0','0','0','" + date + "','0')"); 
 			} 
@@ -72,6 +73,20 @@ public class PlayerJoin implements Listener {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		
+		// add player to global_users table
+		try {
+			// if player is not in table
+			if (!mysql.querySQL("SELECT uuid FROM global_users WHERE uuid = '" + player.getUniqueId().toString() + "'").next()){
+				// add player to table
+				mysql.updateSQL("INSERT INTO global_users (uuid,displayname,rank,coins,gems,votes,donated,first_joined,last_joined,time_played) VALUES "
+						+ "('"+ player.getUniqueId() + "','" + player.getDisplayName() + "','0','0','0','0','0','" + date + "','" + date + "','0')"); 
+			} 
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	
 	
 		
 		

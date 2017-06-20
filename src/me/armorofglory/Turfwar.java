@@ -78,7 +78,7 @@ public class Turfwar extends JavaPlugin {
 		// if turfwar table does not exist, create new turfwar table
 		try {
 			// check if anything is inside of table 'turfwar'
-			mysql.querySQL("SELECT uuid FROM turfwar");
+			mysql.querySQL("DESCRIBE turfwar");
 	
 		} catch (Exception e) {
 			
@@ -97,21 +97,21 @@ public class Turfwar extends JavaPlugin {
 		// if global_users tables does not exist
 		try {
 			// check if anything is inside of table 'turfwar'
-			mysql.querySQL("SELECT uuid FROM global_users");
+			mysql.querySQL("DESCRIBE global_users");
 	
 		} catch (Exception e) {
 			
 			try {
 				// create new table 'turfwar' 
-				mysql.updateSQL("CREATE TABLE global_users (uuid CHAR(36), displayname VARCHAR(16), "
-						+ "wins INT, defeats INT, points INT, kills INT, deaths INT, turf_broken INT, "
-						+ "turf_placed INT, turf_deposited INT, last_played DATE, games_played INT, "
-						+ "PRIMARY KEY (`uuid`))");
+				mysql.updateSQL("CREATE TABLE global_users (uuid CHAR(36), displayname VARCHAR(16), rank INT, "
+						+ "coins INT, gems INT, votes INT, donated INT, first_joined DATE, last_joined DATE, "
+						+ "time_played INT, PRIMARY KEY (`uuid`))");
 
 				Bukkit.getLogger().info("[TurfWar] A global_users mySQL table has been created!");
 			} catch (ClassNotFoundException | SQLException e1) {
 				e1.printStackTrace();
 			}
+			//Global - uuid, display name, last_joined, first_join, time_played, coins, gems, rank store as int, votes, donated
 		}
 			
 			
@@ -140,28 +140,9 @@ public class Turfwar extends JavaPlugin {
 		ScoreboardManager.updateLobbyboard();
 		
 		Arena.save();
-		
-<<<<<<< HEAD
-=======
-		// Connect to Database
-		try {
-			connection = MySQL.openConnection();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
->>>>>>> 53dcc83f603e94f588ea7cc146ee6ea357c5679f
 		createMenu();
 		
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 53dcc83f603e94f588ea7cc146ee6ea357c5679f
 	
 	public void onDisable() {
 		Team.backupAllTeams();

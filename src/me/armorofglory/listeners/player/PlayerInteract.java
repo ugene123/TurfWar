@@ -1,5 +1,7 @@
 package me.armorofglory.listeners.player;
 
+import java.sql.ResultSet;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,14 +15,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import me.armorofglory.GameState;
+import me.armorofglory.Turfwar;
 import me.armorofglory.config.ConfigAccessor;
 import me.armorofglory.handlers.GUI;
 import me.armorofglory.handlers.Team;
+import me.armorofglory.mysql.MySQL;
 import me.armorofglory.score.ScoreboardManager;
 import me.armorofglory.utils.ChatUtils;
 
 public class PlayerInteract implements Listener {
 	
+	MySQL mysql = Turfwar.mysql;
 	
 	@EventHandler
 	public void onP(PlayerInteractEvent event) {
@@ -65,13 +70,13 @@ public class PlayerInteract implements Listener {
 										@SuppressWarnings("deprecation")
 										String BlockInInventory = item.getTypeId() + ":" + item.getData().getData();
 										String OppositeTeamBlock = ConfigAccessor.getString("Teams.BLUE.TeamBlock");
-								
+										
 										if(BlockInInventory.equals(OppositeTeamBlock)) {
 											
 											team.addPoints(item.getAmount() * multiplier);
 											TotalBlocks += item.getAmount();
 										
-											player.getInventory().remove(item);
+											player.getInventory().setItem(i,new ItemStack(Material.AIR));
 										
 										
 										}
@@ -82,6 +87,22 @@ public class PlayerInteract implements Listener {
 									
 									ChatUtils.msgPlayer(player, ChatColor.GREEN + "You've deposited a total of " + TotalBlocks + " turf for " + (TotalBlocks * multiplier) + " points!");
 									ScoreboardManager.updateGameboard();
+									
+									try {
+										// update turf_deposited
+										ResultSet result = mysql.querySQL("SELECT turf_deposited FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										result.next();
+										int turf_deposited = result.getInt("turf_deposited") + TotalBlocks;
+										mysql.updateSQL("UPDATE turfwar SET turf_deposited = " + turf_deposited + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										// update 
+										ResultSet resultp = mysql.querySQL("SELECT points FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										resultp.next();
+										int points = resultp.getInt("points") + (TotalBlocks * multiplier);
+										mysql.updateSQL("UPDATE turfwar SET points = " + points + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
 									
 								} else {
 									
@@ -112,7 +133,7 @@ public class PlayerInteract implements Listener {
 											team.addPoints(item.getAmount() * multiplier);
 											TotalBlocks += item.getAmount();
 										
-											player.getInventory().remove(item);
+											player.getInventory().setItem(i,new ItemStack(Material.AIR));
 										
 										}
 									}
@@ -122,6 +143,22 @@ public class PlayerInteract implements Listener {
 									
 									ChatUtils.msgPlayer(player, ChatColor.GREEN + "You've deposited a total of " + TotalBlocks + " turf for " + (TotalBlocks * multiplier) + " points!");
 									ScoreboardManager.updateGameboard();
+									
+									try {
+										// update turf_deposited
+										ResultSet result = mysql.querySQL("SELECT turf_deposited FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										result.next();
+										int turf_deposited = result.getInt("turf_deposited") + TotalBlocks;
+										mysql.updateSQL("UPDATE turfwar SET turf_deposited = " + turf_deposited + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										// update 
+										ResultSet resultp = mysql.querySQL("SELECT points FROM turfwar WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										resultp.next();
+										int points = resultp.getInt("points") + (TotalBlocks * multiplier);
+										mysql.updateSQL("UPDATE turfwar SET points = " + points + " WHERE uuid = '" + player.getUniqueId().toString() + "'");
+										
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
 									
 								} else {
 									
